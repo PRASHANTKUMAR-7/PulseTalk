@@ -108,14 +108,14 @@ export async function logout(req,res){
 export async function onboard(req,res){
     try {
         const userId=req.user._id;
-        const {fullName,bio,nativelanguage,learningLanguage,location}=req.body;
-        if(!fullName || !bio || !nativelanguage || !learningLanguage || !location){
+        const {fullName,bio,nativeLanguage,learningLanguage,location}=req.body;
+        if(!fullName || !bio || !nativeLanguage || !learningLanguage || !location){
             return res.status(400).json({
                 message:"All feilds are required",
                 missingFields:[
                     !fullName && "fullName",
                     !bio && "bio",
-                    !nativelanguage && "nativeLanguage",
+                    !nativeLanguage && "nativeLanguage",
                     !learningLanguage && "learningLanguage",
                     !location && "location",
                 ].filter(Boolean),
