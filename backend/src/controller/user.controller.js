@@ -35,3 +35,13 @@ export async function getMyFriends(req,res){
     }
 
 };
+
+//route to send friends request 
+export async function sendFriendRequest(req,res){
+    try {
+        
+    } catch (error) {
+        
+    }
+
+}
