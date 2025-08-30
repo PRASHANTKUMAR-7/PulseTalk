@@ -128,6 +128,17 @@ export async function onboard(req,res){
     },{new:true})  
     
     if(!updateUser) return res.status(404).json({message:"User not found"});
+    try {
+         await upsertStreamUser({
+            id:updateUser._id.toString(),
+            name: updateUser.fullName,
+            image:updateUser.profilePic || "",
+         })
+        console.log(`Stream user updated after unboarding for ${updateUser.fullName}`);
+    } catch (streamError) {
+        console.log("Error updating Stream user during onboard:",streamError);
+        
+    }
 
     //TODO Update user ifo in stream
 
