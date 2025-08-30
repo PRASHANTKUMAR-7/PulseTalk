@@ -22,6 +22,16 @@ export async function getRecommendedUsers(req,res){
 };
 
 export async function getMyFriends(req,res){
+    try {
+        const user=await User.findById(req.user.id)
+        .selext("friends")
+        .populate("friends","fullName profilePic nativeLanguage learningLanguage");
 
+        res.status(200).json(user.friends);
+
+    } catch (error) {
+        console.error("Error in getMyfriends ontroller",error.message);
+        res.status(500).json({message: "Internet server Error"});
+    }
 
 };
