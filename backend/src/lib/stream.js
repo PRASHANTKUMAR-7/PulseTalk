@@ -1,0 +1,1 @@
+import {StreaChat} from "stream-chat";

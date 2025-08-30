@@ -1,6 +1,8 @@
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
 
+
+//sign up route
 export async function signup(req,res){
     const{email,password,fullName}=req.body;
     try{
@@ -32,7 +34,7 @@ export async function signup(req,res){
             expiresIn:"7d"
         });
 
-        res.cookie("cookieToken",token,{
+        res.cookie("jwt",token,{ // jwt is the a variable name for jwt cookie
             maxAge: 7*24*60*60*1000,
             httpOnly: true, //prevent XSS attacks,
             sameSite:"strict", //prevent from ccrc attack
@@ -55,16 +57,16 @@ export async function login(req,res){
             return res.status(400).json({message:"All feilds are required"});
         }
         const user= await User.findOne({email});
-        if(!user) return res.status(401).json({message:"Invailid email or password"});        
-        const isPasswordCorrect=await user.matchPassword(password);
+        if(!user) return res.status(401).json({message:"Invailid email or password"});//check user present in DB     
+        const isPasswordCorrect=await user.matchPassword(password); //check password is correct
         if(!isPasswordCorrect) return res.status(401).json({message:"Invalid email or password"});
 
         //token is genrated for authenticationusing jwt 
-        const token =jwt.sign({ userId:newUser._id},process.env.JWT_SECRET_KEY,{
+        const token =jwt.sign({ userId: user._id},process.env.JWT_SECRET_KEY,{
             expiresIn:"7d"
         });
 
-        res.cookie("cookieToken",token,{
+        res.cookie("jwt",token,{ // jwt is the a variable name for jwt cookie
             maxAge: 7*24*60*60*1000,
             httpOnly: true, //prevent XSS attacks,
             sameSite:"strict", //prevent from ccrc attack
@@ -81,6 +83,6 @@ export async function login(req,res){
 };
 
 export async function logout(req,res){
-    res.clearCookie("cookieToken");
+    res.clearCookie("jwt");
     res.status(200).json({success:true,message: "Logout Succesful"});
 };
