@@ -1,11 +1,11 @@
-import User from "../models/User.js";
+import User from "../models/user.js";
 import jwt from "jsonwebtoken";
 
 export async function signup(req,res){
-    const{email,password,fullname}=req.body;
+    const{email,password,fullName}=req.body;
     try{
-        if(!email ||!password || !fullname){
-            return res.status(400).jason({message: "All fields are required"});
+        if(!email ||!password || !fullName){
+            return res.status(400).json({message: "All fields are required"});
         }
         if(password.length<6){
             return res.status(400).json({message: "Password must be atleast 6 characters"});
@@ -20,9 +20,9 @@ export async function signup(req,res){
         }
         const idx= Math.floor(Math.random()*100)+1;
         const randomAvatar=`https://avatar.iran.liara.run/public/${idx}.png`;
-        const newUser = new User.create({
+        const newUser = await User.create({
             email,
-            fullname,
+            fullName,
             password,
             profilePic: randomAvatar,
         });
@@ -32,17 +32,18 @@ export async function signup(req,res){
             expiresIn:"7d"
         });
 
-        res.cookies("jwt",token,{
+        res.cookie("jwt",token,{
             maxAge: 7*24*60*60*1000,
             httpOnly: true, //prevent XSS attacks,
-            sameSite:"strict",
+            sameSite:"strict", //prevent from ccrc attack
             secure:process.env.NODE_ENV === 'production',
         });
         res.status(201).json({success:true,user:newUser}); 
 
     }
     catch(error){
-
+        console.log("Error in signup controller",error);
+        res.status(500).json({ message: "Internal Server Error"});
     }
 };
 

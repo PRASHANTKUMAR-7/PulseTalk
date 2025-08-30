@@ -7,8 +7,8 @@ dotenv.config();
 const app= express();
 const PORT = process.env.PORT //Port no came from .env file
 
-app.use(express.jason());
- 
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("Server is up and running 🚀");
 });
