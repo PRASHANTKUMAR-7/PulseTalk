@@ -38,6 +38,7 @@ export async function signup(req,res){
             sameSite:"strict", //prevent from ccrc attack
             secure:process.env.NODE_ENV === 'production',
         });
+
         res.status(201).json({success:true,user:newUser}); 
 
     }
@@ -46,7 +47,7 @@ export async function signup(req,res){
         res.status(500).json({ message: "Internal Server Error"});
     }
 };
-
+ //login route 
 export async function login(req,res){
     try{
         const {email,password} = req.body;
@@ -54,12 +55,26 @@ export async function login(req,res){
             return res.status(400).json({message:"All feilds are required"});
         }
         const user= await User.findOne({email});
-        if(!user) return res.status(401).json({message:"Invailid email or password"});
+        if(!user) return res.status(401).json({message:"Invailid email or password"});        
         const isPasswordCorrect=await user.matchPassword(password);
-        if(!isPasswordCorrect) return res.status(401).json({message:"Invalid email or password"});
+
+        //token is genrated for authenticationusing jwt 
+        const token =jwt.sign({ userId:newUser._id},process.env.JWT_SECRET_KEY,{
+            expiresIn:"7d"
+        });
+
+        res.cookie("jwt",token,{
+            maxAge: 7*24*60*60*1000,
+            httpOnly: true, //prevent XSS attacks,
+            sameSite:"strict", //prevent from ccrc attack
+            secure:process.env.NODE_ENV === 'production',
+        });    if(!isPasswordCorrect) return res.status(401).json({message:"Invalid email or password"});
+        res.status(200).json({success: true, user});
+    
     }
     catch(error){
-
+        console.log("Error in login controller",error);
+        res.status(500).json({ message: "Internal Server Error"});
     }
 };
 
