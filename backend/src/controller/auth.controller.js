@@ -48,7 +48,19 @@ export async function signup(req,res){
 };
 
 export async function login(req,res){
-    res.send("Login Route");
+    try{
+        const {email,password} = req.body;
+        if(!email || !password){
+            return res.status(400).json({message:"All feilds are required"});
+        }
+        const user= await User.findOne({email});
+        if(!user) return res.status(401).json({message:"Invailid email or password"});
+        const isPasswordCorrect=await user.matchPassword(password);
+        if(!isPasswordCorrect) return res.status(401).json({message:"Invalid email or password"});
+    }
+    catch(error){
+
+    }
 };
 
 export async function logout(req,res){

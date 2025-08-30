@@ -63,6 +63,11 @@ userSchema.pre("save", async function (next) {
   }
 });
 
+//matching password  decryptiong saved password and then compare and return true or false
+userSchema.method.matchPassword= async function (enteredPassword){
+  const isPasswordCorrect= await bcrypt.compare(enteredPassword,this.password);
+  return isPasswordCorrect;
+}
 const User = mongoose.model("User", userSchema);
 
 export default User;
