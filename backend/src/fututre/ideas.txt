@@ -1,0 +1,55 @@
+What I am Basically Building
+
+A Chat + Video Calling app (like WhatsApp/Signal).
+
+With real-time AI translation:
+
+For text → auto-translated on delivery.
+
+For video calls → add AI subtitles or even voice translation (speech-to-speech) in future.
+
+Feasibility (Current Tech)
+
+Text Translation: Easy with APIs like Google Translate API, DeepL, or OpenAI GPT models.
+
+Voice/Video Translation: More advanced, but doable with Whisper (speech-to-text) + translation model + text-to-speech.
+
+You can start with text chat only (MVP), then scale to voice/video.
+
+🔹 1. Using AI Agents
+
+An AI agent is basically an intelligent component that can decide how to process input.
+
+In your case, an agent could:
+
+Detect the language of the incoming message.
+
+Choose the right translation model (e.g., Hindi ↔ Korean).
+
+Pass it to a translator (Google Translate API, Hugging Face model, or OpenAI).
+
+Return the translated text in real-time to the chat.
+
+👉 So yes, you could design a translation agent that works inside PulseTalk to handle all this automatically.
+
+🔹 2. Using Hugging Face
+
+Hugging Face has translation models like MarianMT, M2M100, and NLLB (No Language Left Behind).
+
+These models can translate between 100+ languages without needing English as a pivot.
+
+You could host them:
+
+On Hugging Face Inference API (easy but paid).
+
+On your own backend using Transformers library (cheaper, but you need GPU).
+
+👉 Hugging Face is perfect if you want custom control and don’t want to rely only on Google Translate.
+
+🔹 3. Hybrid Approach (Best Practical Path)
+
+MVP (basic chat): Use Google Translate API / DeepL API → quick, reliable, cheap.
+
+Advanced version: Switch to Hugging Face models for more control and possibly offline/self-hosted translation.
+
+Add AI Agent layer later → to handle language detection, routing, caching, and maybe even personalized tone adaptation (formal/informal translation).

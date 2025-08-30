@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";//OR we can also do this= import "dotenv/config";
+import cookieparser from "cookie-parser";
 import authRoutes from "./routes/auth.route.js";
 import { connectDB } from "./lib/db.js";
 dotenv.config();
@@ -8,6 +9,7 @@ const app= express();
 const PORT = process.env.PORT //Port no came from .env file
 
 app.use(express.json());
+app.use(cookieparser());
 
 app.get("/", (req, res) => {
   res.send("Server is up and running 🚀");

@@ -37,7 +37,7 @@ export async function signup(req,res){
                 name:newUser.fullName,
                 image:newUser.profilePic || "",
             });
-            console.log(`Stream user created${newUser.fullName}`);
+            console.log(`Stream user created ${newUser.fullName}`);
         } catch (error) {
             console.log("Error in creating user on stream", error);
         }
@@ -98,7 +98,43 @@ export async function login(req,res){
     }
 };
 
+
+//logout route
 export async function logout(req,res){
     res.clearCookie("jwt");
     res.status(200).json({success:true,message: "Logout Succesful"});
+};
+
+export async function onboard(req,res){
+    try {
+        const userId=req.user._id;
+        const {fullName,bio,nativelanguage,learningLanguage,location}=req.body;
+        if(!fullName || !bio || !nativelanguage || !learningLanguage || !location){
+            return res.status(400).json({
+                message:"All feilds are required",
+                missingFields:[
+                    !fullName && "fullName",
+                    !bio && "bio",
+                    !nativelanguage && "nativeLanguage",
+                    !learningLanguage && "learningLanguage",
+                    !location && "location",
+                ].filter(Boolean),
+            })
+        }
+//updating user in database
+    const updateUser=await User.findByIdAndUpdate(userId,{
+        ...req.body,//instaed of writing all parameter one by one req.body took all parameter in single go
+        isOnboarded:true,
+    },{new:true})  
+    
+    if(!updateUser) return res.status(404).json({message:"User not found"});
+
+    //TODO Update user ifo in stream
+
+    res.status(200).json({success:true,user:updateUser});
+
+
+    } catch (error) {
+      res.status(500).json({message: "Internal Server Error"});  
+    }
 };
