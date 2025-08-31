@@ -114,3 +114,23 @@ export async function acceptFriendRequest(req,res){
     }
 
 }
+
+//route to get staus of friend request either came or accepted 
+export async function getFriendRequest(req,res){
+    try {
+        const incommingReqs=await FriendRequest.find({
+            recipient:req.user.id,
+            status:"pending",
+        }).populate("sender fullName profilePic nativeLanguage learningLanguage");
+
+        const acceptedReqs=await FriendRequest.find({
+            sender:req.user.id,
+            status: "accepted",
+        }).populate("recipient","fullName profilePic");
+
+        res.status(200).json({incommingReqs,acceptedReqs});
+    } catch (error) {
+        console.log("Error in getPendingFriendRequest COntroller",error.message);
+        req.status(500).json({message:"Internal Server Error"});
+    }
+}
