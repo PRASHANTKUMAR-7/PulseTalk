@@ -2,8 +2,8 @@ import express from "express";
 import dotenv from "dotenv";//OR we can also do this= import "dotenv/config";
 import cookieparser from "cookie-parser";
 import authRoutes from "./routes/auth.route.js";
-import userRoutes from ".routes/user.route.js";
-import chatRoutes from ".routes/user.route.js";
+import userRoutes from "./routes/user.route.js";
+import chatRoutes from "./routes/chat.route.js";
 import { connectDB } from "./lib/db.js";
 dotenv.config();
 
