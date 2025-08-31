@@ -143,7 +143,7 @@ export async function getOutgoingFriendReqs(req,res){
             status:"pending",
         }).populate("resipient","fullName profilePic nativeLanguage learningLanguage");
    } catch (error) {
-        console.log("Error in getPendingFriendRequest COntroller",error.message);
+        console.log("Error in getOutgoingFriendRequest COntroller",error.message);
         req.status(500).json({message:"Internal Server Error"});
    } 
 }

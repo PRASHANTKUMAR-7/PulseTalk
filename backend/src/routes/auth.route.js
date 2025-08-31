@@ -10,6 +10,10 @@ router.post("/Logout",logout);
 
 router.post("/onboarding",protectedRoute,onboard);
 
+//future scope
+//forgot password
+//send-reset-password-email
+
 //check is user is logged in or not
 router.get("/me",protectedRoute,(req,res)=>{
     res.status(200).json({success:true,user:req.user});

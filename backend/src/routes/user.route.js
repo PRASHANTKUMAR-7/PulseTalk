@@ -8,6 +8,7 @@ const router=express.Router();
 
 //apply auth middleware to all route
 router.use(protectRoute);
+
 router.get("/",getRecommendedUsers);
 router.get("/friends",getMyFriends);
 
@@ -15,6 +16,9 @@ router.get("/friends",getMyFriends);
 router.post("/friend-request/:id", sendFriendRequest);
 //route for accepting a freind request
 router.put("/friend-request/:id/accept",acceptFriendRequest);
+
+//future scope
+//reject friend request route
 
 // friend request we get and its status
 router.get("/friend-request/",getFriendRequest);
