@@ -9,20 +9,22 @@ import OnboardingPage from "./pages/OnboardingPage.jsx";
 import toast, {Toaster} from "react-hot-toast";
 import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
+import { axiosInstance } from './lib/axios.js';
 
 const App = () => {
-  const time_to_start=22654;
+  // const time_to_start=22654;
   //axios for frontend and backend relation
   //react querry or tanstack querry
-  const {data,isLoading,error} = useQuery({
+  const {data,isLoading,error} = useQuery({//this has a great feature that if it(useQuery/teanstack) fails then it try more then once to execute on the other hand usestate will try single time
     queryKey: ["todo"],
 
     queryFn: async()=>{
-      const res = await axios.get("https://jsonplaceholder.typicode.com/todos");
+      const res = await axiosInstance.get("r/auth/me");
       return res.data;
-    }
+    },
+    retry:false, //if you dont want to retry more than once
   });
-
+  console.log(data);
   return (
     <div className="h-screen" data-theme="night">
       {/* <button onClick={()=>toast.error("Hello World")}>Create a Toast</button> //using react hot toast */}
