@@ -7,10 +7,21 @@ import CallPage from "./pages/CallPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
 import toast, {Toaster} from "react-hot-toast";
+import {useQuery} from "@tanstack/react-query";
+import axios from "axios";
 
 const App = () => {
-  //axios 
+  const time_to_start=22654;
+  //axios for frontend and backend relation
   //react querry or tanstack querry
+  const {data,isLoading,error} = useQuery({
+    queryKey: ["todo"],
+
+    queryFn: async()=>{
+      const res = await axios.get("https://jsonplaceholder.typicode.com/todos");
+      return res.data;
+    }
+  });
 
   return (
     <div className="h-screen" data-theme="night">
@@ -30,3 +41,5 @@ const App = () => {
 }
 
 export default App
+
+
