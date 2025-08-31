@@ -53,3 +53,5 @@ MVP (basic chat): Use Google Translate API / DeepL API → quick, reliable, chea
 Advanced version: Switch to Hugging Face models for more control and possibly offline/self-hosted translation.
 
 Add AI Agent layer later → to handle language detection, routing, caching, and maybe even personalized tone adaptation (formal/informal translation).
+
+1:48:05
