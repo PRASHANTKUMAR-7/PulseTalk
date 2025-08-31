@@ -121,7 +121,7 @@ export async function getFriendRequest(req,res){
         const incommingReqs=await FriendRequest.find({
             recipient:req.user.id,
             status:"pending",
-        }).populate("sender fullName profilePic nativeLanguage learningLanguage");
+        }).populate("sender", "fullName profilePic nativeLanguage learningLanguage");
 
         const acceptedReqs=await FriendRequest.find({
             sender:req.user.id,
@@ -133,4 +133,17 @@ export async function getFriendRequest(req,res){
         console.log("Error in getPendingFriendRequest COntroller",error.message);
         req.status(500).json({message:"Internal Server Error"});
     }
+}
+
+//route to avoid the user whome the present user send friend request
+export async function getOutgoingFriendReqs(req,res){
+   try {
+        const outgoingRequests=await FriendRequest.find({
+            recipient:req.user.id,
+            status:"pending",
+        }).populate("resipient","fullName profilePic nativeLanguage learningLanguage");
+   } catch (error) {
+        console.log("Error in getPendingFriendRequest COntroller",error.message);
+        req.status(500).json({message:"Internal Server Error"});
+   } 
 }
