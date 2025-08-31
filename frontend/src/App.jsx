@@ -9,6 +9,9 @@ import OnboardingPage from "./pages/OnboardingPage.jsx";
 import toast, {Toaster} from "react-hot-toast";
 
 const App = () => {
+  //axios 
+  //react querry or tanstack querry
+
   return (
     <div className="h-screen" data-theme="night">
       {/* <button onClick={()=>toast.error("Hello World")}>Create a Toast</button> //using react hot toast */}
