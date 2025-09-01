@@ -1,5 +1,6 @@
 import { useState } from "react"
 import {MessageSquareHeart} from "lucide-react"
+import { Link } from "react-router";
 
 
 const SighUpPage = () => {
@@ -88,7 +89,18 @@ const SighUpPage = () => {
                     <span className="text-primary hover:underline">privacy policy</span>
                   </span>
                 </label>
-              </div>
+              </div>              
+            </div>
+            <button className="btn btn-primary w-full" type="submit">
+              Create Account
+            </button>
+            <div className="text-center mt-4">
+              <p className="text-sm">
+                Already have an account?{" "}
+                <Link to="/login" className="text-primary hover:underline">
+                  Sign in
+                </Link>
+              </p>
             </div>
           </div>
         </form>
@@ -98,6 +110,22 @@ const SighUpPage = () => {
 
 
     </div>
+{/* SIGNUP FROM -RIGHT SIDE  */}  
+    <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/10 items-center justify-center">
+  <div className="max-w-md p-8">
+    {/* Illustration */}
+    <div className="relative aspect-square max-w-sm mx-auto">
+      <img src="/pic1.png" alt="Language connection illustration" className="w-full h-full" />
+    </div>
+
+    <div className="text-center space-y-3 mt-6">
+      <h2 className="text-xl font-semibold">Talk Together Beyond Borders</h2>
+      <p className="opacity-70">
+        Practice conversations, Make friends, and Improve your language skills together
+      </p>
+    </div>
+  </div>
+</div>
   </div>
 </div>
   )
