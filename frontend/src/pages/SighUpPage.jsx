@@ -2,6 +2,7 @@ import { useState } from "react"
 import {MessageSquareHeart} from "lucide-react"
 import { Link } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import signup from "../lib/api";
 
 
 const SighUpPage = () => {
@@ -13,16 +14,14 @@ const SighUpPage = () => {
 
   const queryClient =useQueryClient();
 
-  const {mutate,isPending,error}=useMutation({
-    mutationFn:async()=>{
-    const response=await axiosInstance.post("/auth/signup", setSignupData);
-    },
+  const {mutate:signupMutation,isPending,error}=useMutation({
+    mutationFn: signup,
     onSuccess:()=>queryClient.invalidateQueries({queryKey:["authUser"]}),
-  })
+  });
 
-  const handleSigup=(e)=>{
+  const handleSigup=(e)=>{ //once the form summit click this function will run
     e.preventDefault();
-    mutate()
+    signupMutation(signupData); //this function will run autorisation of user and re run signup component in App.jsx
   }
   return (
     <div className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8" data-theme="forest">
@@ -36,9 +35,16 @@ const SighUpPage = () => {
         PulseTalk
       </span>
       </div>
+      {/* ERROR MESSAGE IF ANY */}
+      {error && (
+        <div className="alert alert-error mb-4">
+          <span>{error.response.data.message}</span>
+        </div>
+      )}
+
       {/* signup form */}
       <div className="w-full">
-        <form onSubmit={handleSigup}>
+        <form onSubmit={handleSigup}> {/* This function will run when we click on submit button */}
           <div className="space-y-4">
             <div>
               <h2 className="text-xl font-semibold">Create an Account</h2>
@@ -100,8 +106,9 @@ const SighUpPage = () => {
                 </label>
               </div>              
             </div>
+
             <button className="btn btn-primary w-full" type="submit">
-              {isPending ? "Signing up" : "Create Account"} {/* why use of isPending*/}
+               {isPending ? "Signing up..." : "Create Account"} {/*why use of isPending*/}
             </button>
             <div className="text-center mt-4">
               <p className="text-sm">
