@@ -1,20 +1,29 @@
 import { useState } from "react"
 import {MessageSquareHeart} from "lucide-react"
 import { Link } from "react-router";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 
 const SighUpPage = () => {
-
   const [signupData , setSignupData]=useState({
     fullName:"",
     email:"",
     password:"",
   });
+
+  const queryClient =useQueryClient();
+
+  const {mutate,isPending,error}=useMutation({
+    mutationFn:async()=>{
+    const response=await axiosInstance.post("/auth/signup", setSignupData);
+    },
+    onSuccess:()=>queryClient.invalidateQueries({queryKey:["authUser"]}),
+  })
+
   const handleSigup=(e)=>{
     e.preventDefault();
+    mutate()
   }
-
-
   return (
     <div className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8" data-theme="forest">
   <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
@@ -92,7 +101,7 @@ const SighUpPage = () => {
               </div>              
             </div>
             <button className="btn btn-primary w-full" type="submit">
-              Create Account
+              {isPending ? "Signing up" : "Create Account"} {/* why use of isPending*/}
             </button>
             <div className="text-center mt-4">
               <p className="text-sm">

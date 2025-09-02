@@ -6,9 +6,8 @@ import NotificationPage from "./pages/NotificationPage.jsx";
 import CallPage from "./pages/CallPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
-import toast, {Toaster} from "react-hot-toast";
+import {Toaster} from "react-hot-toast";
 import {useQuery} from "@tanstack/react-query";
-import axios from "axios";
 import { axiosInstance } from './lib/axios.js';
 
 const App = () => {
@@ -16,7 +15,7 @@ const App = () => {
   //axios for frontend and backend relation
   //react querry or tanstack querry
   const {data:authData,isLoading,error} = useQuery({//this has a great feature that if it(useQuery/teanstack) fails then it try more then once to execute on the other hand usestate will try single time
-    queryKey: ["authUser"],
+    queryKey: ["authUser"], //used in signup page
     queryFn: async()=>{
       const res = await axiosInstance.get("r/auth/me");
       return res.data;
