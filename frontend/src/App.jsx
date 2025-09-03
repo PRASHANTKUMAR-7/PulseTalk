@@ -7,25 +7,14 @@ import CallPage from "./pages/CallPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
 import {Toaster} from "react-hot-toast";
-import {useQuery} from "@tanstack/react-query";
-import { axiosInstance } from './lib/axios.js';
 import  ConversationLoader from './components/ConversationLoader.jsx';
+import useAuthUser from './hooks/useAuthUser.js';
 
 const App = () => {
   // const time_to_start=2.49.00;
   //axios for frontend and backend relation
-  //react querry or tanstack querry
-  const {data:authData,
-    isLoading,
-    error,} = useQuery({//this has a great feature that if it(useQuery/teanstack) fails then it try more then once to execute on the other hand usestate will try single time
-    queryKey: ["authUser"], //used in signup page
-    queryFn: async()=>{
-      const res = await axiosInstance.get("/auth/me");
-      return res.data;
-    },
-    retry:false, //if you dont want to retry more than once
-  });
-  const authUser=authData?.user; //we use user b/c in auth.route we use user
+  //react querry or tanstack querry from custome hook useAuthUser
+   const {isLoading,authUser}=useAuthUser();//we use user b/c in auth.route we use user
 
   if(isLoading) return <ConversationLoader/>
 
