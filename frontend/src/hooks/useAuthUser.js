@@ -1,5 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
-import { axiosInstance } from './lib/axios.js';
+import { axiosInstance } from '../lib/axios.js';
 
 const useAuthUser = () => {
   //react querry or tanstack querry

@@ -7,7 +7,7 @@ import CallPage from "./pages/CallPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
 import {Toaster} from "react-hot-toast";
-import  ConversationLoader from './components/ConversationLoader.jsx';
+import  PageLoader from './components/PageLoader.jsx';
 import useAuthUser from './hooks/useAuthUser.js';
 
 const App = () => {
@@ -16,9 +16,9 @@ const App = () => {
   //react querry or tanstack querry from custome hook useAuthUser
    const {isLoading,authUser}=useAuthUser();//we use user b/c in auth.route we use user
    const isAuthenticated = Boolean(authUser);
-   const isOnboarded = authUser?.isOnboarded;
+   const isOnboarded = authUser?.isOnboarded
 
-  if(isLoading) return <ConversationLoader/>
+  if(isLoading) return <PageLoader/>;
 
 
   return (
