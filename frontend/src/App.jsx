@@ -9,6 +9,7 @@ import OnboardingPage from "./pages/OnboardingPage.jsx";
 import {Toaster} from "react-hot-toast";
 import {useQuery} from "@tanstack/react-query";
 import { axiosInstance } from './lib/axios.js';
+import  ConversationLoader from './components/ConversationLoader.jsx';
 
 const App = () => {
   // const time_to_start=2.49.00;
@@ -25,6 +26,8 @@ const App = () => {
     retry:false, //if you dont want to retry more than once
   });
   const authUser=authData?.user; //we use user b/c in auth.route we use user
+
+  if(isLoading) return <ConversationLoader/>
 
 
   return (
