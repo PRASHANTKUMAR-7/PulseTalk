@@ -22,7 +22,8 @@ const SighUpPage = () => {
   const handleSigup=(e)=>{ //once the form summit click this function will run
     e.preventDefault();
     mutate(signupData); //this function will run autorisation of user and re run signup component in app.jsx
-  }
+  };
+  
   return (
     <div className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8" data-theme="forest">
   <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
