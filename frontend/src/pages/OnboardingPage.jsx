@@ -5,6 +5,10 @@ import { completeOnboarding } from "../lib/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { ShuffleIcon } from "lucide-react";
 import { LANGUAGES } from "../constants";
+import { MapPinIcon } from "lucide-react";
+import { ShipWheelIcon } from "lucide-react";
+import { LoaderIcon } from "lucide-react";
+import toast from "react-hot-toast";
 
 const OnboardingPage = () => {
   const {authUser}=useAuthUser();
@@ -24,6 +28,9 @@ const {mutate:onboardingMutation, isPending}= useMutation({
     toast.success("Profile Onboarded Successfully");
     querryClient.invalidateQueries({queryKey: ["authUser"]});
   },
+  onError:(error)=>{
+    toast.error(error.response.data.message);
+  },
 });
 const handleSubmit=(e)=>{
   e.preventDefaullt();
@@ -32,7 +39,10 @@ const handleSubmit=(e)=>{
 };
 
 const handleRandomAvatar=()=>{
-
+const idx=Math.floor(Math.random()*100)+1;
+const randomAvatar=`https://avatar.iran.liara.run/public/${idx}.png`;
+setFormState({...formState, profilePic:randomAvatar});
+toast.success("Avatar Changed Successfully");
 };
 
   return (
@@ -130,6 +140,7 @@ const handleRandomAvatar=()=>{
                 </select>
               </div>
             </div>
+            {/* Location */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Location</span>
@@ -145,7 +156,21 @@ const handleRandomAvatar=()=>{
                   placeholder="City, Country"
                 />
               </div>
-            </div>            
+            </div>   
+            {/* Button */}
+            <button className="btn btn-primary w-full" disabled={isPending} type="submit">
+              {!isPending ? (
+                <>
+                  <ShipWheelIcon className="size-5 mr-2" />
+                  Complete Onboarding
+                </>
+              ) : (
+                <>
+                  <LoaderIcon className="animate-spin size-5 mr-2" />
+                  Onboarding...
+                </>
+              )}
+            </button>
         </form>
       </div>
     </div>
