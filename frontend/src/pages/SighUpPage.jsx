@@ -1,29 +1,35 @@
 import { useState } from "react"
 import {MessageSquareHeart} from "lucide-react"
 import { Link } from "react-router";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signup } from "../lib/api";
+import useSignup from "../hooks/useSignup";
 
 
 const SighUpPage = () => {
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [signupData , setSignupData]=useState({
     fullName:"",
     email:"",
     password:"",
   });
+// this is how we did it first, without using our custom hook useSignup
+  // const queryClient =useQueryClient();
+  // const {mutate,isPending,error}=useMutation({
+  //   mutationFn: signup,
+  //   onSuccess:()=>queryClient.invalidateQueries({queryKey:["authUser"]}),
+  // });
+//This line is resposible for using custome hook
+  const {signupMutation,isPending,error}=useSignup();
 
-  const queryClient =useQueryClient();
-
-  const {mutate,isPending,error}=useMutation({
-    mutationFn: signup,
-    onSuccess:()=>queryClient.invalidateQueries({queryKey:["authUser"]}),
-  });
+  // Handle checkbox change
+  const handleCheckboxChange = (e) => {
+    setTermsAccepted(e.target.checked); // Set termsAccepted to true or false based on checkbox
+  };
 
   const handleSigup=(e)=>{ //once the form summit click this function will run
     e.preventDefault();
-    mutate(signupData); //this function will run autorisation of user and re run signup component in app.jsx
+    signupMutation(signupData); //this function will run autorisation of user and re run signup component in app.jsx
   };
-  
+
   return (
     <div className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8" data-theme="forest">
   <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
@@ -97,19 +103,24 @@ const SighUpPage = () => {
                   Password must be at least 6 character long
                  </p>
               </div>
-              <div className="form-control">
-                <label className="label cursor-pointer justify-start gap-2">
-                  <input type="checkbox" className="checkbox checkbox-sm required" />
-                  <span className="text-xs leading-tight">
-                    I agree to the{" "}
-                    <span className="text-primary hover:underline">terms of service</span> and{" "}
-                    <span className="text-primary hover:underline">privacy policy</span>
-                  </span>
-                </label>
-              </div>              
-            </div>
+               {/* Terms and Conditions Checkbox */}
+                <div className="form-control">
+                  <label className="label cursor-pointer justify-start gap-2">
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-sm required"
+                      checked={termsAccepted}
+                      onChange={handleCheckboxChange}
+                    />
+                    <span className="text-xs leading-tight">
+                      I agree to the{" "}
+                      <span className="text-primary hover:underline">terms of service</span> and{" "}
+                      <span className="text-primary hover:underline">privacy policy</span>
+                    </span>
+                  </label>
+                </div>
 
-            <button className="btn btn-primary w-full" type="submit">
+            <button className="btn btn-primary w-full" type="submit" disabled={!termsAccepted}>
                {isPending ? (
                 <>
                 <span className="loading loading-spinner loading-xs"></span>
@@ -125,30 +136,26 @@ const SighUpPage = () => {
                 </Link>
               </p>
             </div>
+            </div>
           </div>
         </form>
-
       </div>
-
-
-
     </div>
-{/* SIGNUP FROM -RIGHT SIDE  */}  
+{/* SIGNUP FROM -RIGHT SIDE  Image */}  
     <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/10 items-center justify-center">
-  <div className="max-w-md p-8">
-    {/* Illustration */}
-    <div className="relative aspect-square max-w-sm mx-auto">
-      <img src="/pic1.png" alt="Language connection illustration" className="w-full h-full" />
+      <div className="max-w-md p-8">
+        {/* Illustration */}
+        <div className="relative aspect-square max-w-sm mx-auto">
+          <img src="/pic1.png" alt="Language connection illustration" className="w-full h-full" />
+        </div>
+        <div className="text-center space-y-3 mt-6">
+          <h2 className="text-xl font-semibold">Talk Together Beyond Borders</h2>
+          <p className="opacity-70">
+            Practice conversations, Make friends, and Improve your language skills together
+          </p>
+        </div>
+      </div>
     </div>
-
-    <div className="text-center space-y-3 mt-6">
-      <h2 className="text-xl font-semibold">Talk Together Beyond Borders</h2>
-      <p className="opacity-70">
-        Practice conversations, Make friends, and Improve your language skills together
-      </p>
-    </div>
-  </div>
-</div>
   </div>
 </div>
   )

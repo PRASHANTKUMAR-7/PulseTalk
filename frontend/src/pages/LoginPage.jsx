@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MessageSquareHeart } from "lucide-react";
-import { login } from "../lib/api";
+import useLogin from "../hooks/useLogin";
+import { Link } from "react-router";
 
 
 const LoginPage = () => {
@@ -9,16 +9,19 @@ const[loginData , setLoginData]=useState({
   email: "",
   password:"",
 });
-const queryClient=useQueryClient();
+// this is how we did it first, without using our custom hook useLogin
+// const queryClient = useQueryClient();
+// const {
+//   mutate: loginMutation,
+//   isPending,
+//   error,
+// } = useMutation({
+//   mutationFn: login,
+//   onSuccess: () => queryClient.invalidateQueries({ queryKey: ["authUser"] }),
+// });
 
-const {
-  mutate:loginMutation,
-  isPending,
-  error,
- }=useMutation({
-  mutationFn:login,
-  onSuccess: ()=>queryClient.invalidateQueries({queryKey:["authUser"] }), 
-});
+
+const {loginMutation,isPending,error}=useLogin();
 
 const handlelogin=(e)=>{
   e.preventDefault();
@@ -34,7 +37,7 @@ return (
       <div className="mb-4 flex items-center justify-start gap-2">
         <MessageSquareHeart className="size-9 text-primary" />
         <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary -tracking-wider">
-          Streamify
+          PulseTalk
         </span>
       </div>
       {/* Error Message Display */}
@@ -107,7 +110,21 @@ return (
           </div>
         </form>
       </div>
-
+    </div>
+    {/* Image Section */}
+        <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/10 items-center justify-center">
+      <div className="max-w-md p-8">
+        {/* Illustration */}
+        <div className="relative aspect-square max-w-sm mx-auto">
+          <img src="/pic1.png" alt="Language connection illustration" className="w-full h-full" />
+        </div>
+        <div className="text-center space-y-3 mt-6">
+          <h2 className="text-xl font-semibold">Talk Together Beyond Borders</h2>
+          <p className="opacity-70">
+            Practice conversations, Make friends, and Improve your language skills together
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
