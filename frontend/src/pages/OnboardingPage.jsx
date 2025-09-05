@@ -33,7 +33,7 @@ const {mutate:onboardingMutation, isPending}= useMutation({
   },
 });
 const handleSubmit=(e)=>{
-  e.preventDefaullt();
+  e.preventDefault();
 
   onboardingMutation(formState);
 };
