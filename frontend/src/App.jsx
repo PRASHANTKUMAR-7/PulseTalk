@@ -11,7 +11,7 @@ import  PageLoader from './components/PageLoader.jsx';
 import useAuthUser from './hooks/useAuthUser.js';
 
 const App = () => {
-  // const time_to_start=2.49.00;
+  // const time_to_start=3.10.00;
   //axios for frontend and backend relation
   //react querry or tanstack querry from custome hook useAuthUser
    const {isLoading,authUser}=useAuthUser();//we use user b/c in auth.route we use user

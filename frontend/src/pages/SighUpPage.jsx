@@ -2,7 +2,7 @@ import { useState } from "react"
 import {MessageSquareHeart} from "lucide-react"
 import { Link } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { axiosInstance } from "../lib/axios";
+import { signup } from "../lib/api";
 
 
 const SighUpPage = () => {
@@ -15,16 +15,13 @@ const SighUpPage = () => {
   const queryClient =useQueryClient();
 
   const {mutate,isPending,error}=useMutation({
-    mutationFn: async()=>{
-    const response=await axiosInstance.post("/auth/signup", signupData);
-    return response.data;
-    },
+    mutationFn: signup,
     onSuccess:()=>queryClient.invalidateQueries({queryKey:["authUser"]}),
   });
 
   const handleSigup=(e)=>{ //once the form summit click this function will run
     e.preventDefault();
-    mutate(); //this function will run autorisation of user and re run signup component in app.jsx
+    mutate(signupData); //this function will run autorisation of user and re run signup component in app.jsx
   }
   return (
     <div className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8" data-theme="forest">
@@ -117,7 +114,7 @@ const SighUpPage = () => {
                 <span className="loading loading-spinner loading-xs"></span>
                 Creating Your Account...
                 </>
-               ) : ("Account Created")} {/*why use of isPending*/}
+               ) : ("Create Account")} {/*why use of isPending*/}
             </button>
             <div className="text-center mt-4">
               <p className="text-sm">
