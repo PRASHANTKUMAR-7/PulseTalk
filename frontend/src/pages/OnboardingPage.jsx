@@ -3,6 +3,7 @@ import useAuthUser from "../hooks/useAuthUser";
 import { useMutation } from "@tanstack/react-query";
 import { completeOnboarding } from "../lib/api";
 import { useQueryClient } from "@tanstack/react-query";
+import { ShuffleIcon } from "lucide-react";
 
 const OnboardingPage = () => {
   const {authUser}=useAuthUser();
@@ -27,7 +28,11 @@ const handleSubmit=(e)=>{
   e.preventDefaullt();
 
   onboardingMutation(formState);
-}
+};
+
+const handleRandomAvatar=()=>{
+
+};
 
   return (
   <div className="min-h-screen bg-base-100 flex items-center justify-center p-4">
@@ -51,7 +56,47 @@ const handleSubmit=(e)=>{
                 )
               }
             </div>
+            {/* button to Generate random avatar */}
+            <div className="flex items-center gap-2">
+              <button type="button" onClick={handleRandomAvatar} className="btn btn-accent">
+                <ShuffleIcon className="size-4 mr-2"/>
+                Generate Random Avatar
+              </button>
+            </div>
           </div>
+           {/* FullName */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Full Name</span>
+                </label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={formState.fullName}
+                  onChange={(e) => setFormState({ ...formState, fullName: e.target.value })}
+                  className="input input-bordered w-full"
+                  placeholder="Your full name"
+                />
+              </div>
+              {/* Bio */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Bio</span>
+              </label>
+              <textarea
+                name="bio"
+                value={formState.bio}
+                onChange={(e) => setFormState({ ...formState, bio: e.target.value })}
+                className="textarea textarea-bordered h-24"
+                placeholder="Tell others about yourself and your language learning goals"/>
+            </div>
+            {/* Language */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Native Language */}
+              
+
+              {/* Learning Language */}
+            </div>
 
         </form>
       </div>
