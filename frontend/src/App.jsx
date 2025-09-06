@@ -9,6 +9,8 @@ import OnboardingPage from "./pages/OnboardingPage.jsx";
 import {Toaster} from "react-hot-toast";
 import  PageLoader from './components/PageLoader.jsx';
 import useAuthUser from './hooks/useAuthUser.js';
+import Layout from './components/Layout.jsx';
+
 
 const App = () => {
   // const time_to_start=3.10.00;
@@ -25,7 +27,13 @@ const App = () => {
     <div className="h-screen" data-theme="night">
       {/* <button onClick={()=>toast.error("Hello World")}>Create a Toast</button> //using react hot toast */}
       <Routes>
-        <Route path="/" element= {isAuthenticated && isOnboarded?(<HomePage/>):(<Navigate to={!isAuthenticated? "/login" : "/onboarding"}/>)}/>  {/* if authUser is correct means authorised and onboarded user then open homepage unless redirect to login if not autheticate and if yes then onboarded page  */}
+        <Route path="/" element= {isAuthenticated && isOnboarded?(
+         <Layout showSidebarporps={true}>
+          <HomePage/>
+         </Layout>
+          
+          ):(
+          <Navigate to={!isAuthenticated? "/login" : "/onboarding"}/>)}/>  {/* if authUser is correct means authorised and onboarded user then open homepage unless redirect to login if not autheticate and if yes then onboarded page  */}
         <Route path="/signup" element= {!isAuthenticated?<SignUpPage/> :<Navigate to={ isOnboarded ? "/" : "/onboarding"}/>}/> 
         <Route path="/login" element= {!isAuthenticated? <LoginPage/> :<Navigate to={ isOnboarded ? "/" : "/onboarding"}/>}/> 
         <Route path="/notification" element= {isAuthenticated? <NotificationPage/> :<Navigate to="/login"/>}/> 
