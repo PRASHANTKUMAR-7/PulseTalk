@@ -1,6 +1,9 @@
 import useAuthUser from '../hooks/useAuthUser'
 import { useLocation } from 'react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {MessageSquareHeart,BellIcon} from "lucide-react";
+import { Link } from 'react-router';
+import { logout } from '../lib/api';
 
 const Navbar = () => {
   const {authUser}=useAuthUser();
@@ -15,23 +18,33 @@ const Navbar = () => {
     onSuccess: ()=> queryClient.invalidateQueries({queryKey:["authUser"]})
   });
 
-  return <nav className="bg-base-200 border-b border-base-300 sticky top-0 z-30 h-16 flex items-center">
+  return(
+   <nav className="bg-base-200 border-b border-base-300 sticky top-0 z-30 h-16 flex items-center">
   <div className="container mx-auto px-4 sm:px-6 lg:px-8">
     <div className="flex items-center justify-end w-full">
       {/* LOGO - ONLY IN THE CHAT PAGE */}
       {isChatPage && (
         <div className="pl-5">
           <Link to="/" className="flex items-center gap-2.5">
-            <ShipWheelIcon className="size-9 text-primary" />
+            <MessageSquareHeart className="size-9 text-primary" />
             <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">
-              Streamify
+              PulseTalk
             </span>
           </Link>
         </div>
       )}
+      <div className="flex items-center gap-3 sm:gap-4">
+        <Link to={"/notifications"}>
+          <button className="btn btn-ghost btn-circle">
+            <BellIcon className="h-6 w-6 text-base-content opacity-70" />
+          </button>
+        </Link>
+      </div>
+      <ThemeSelector/>
     </div>
   </div>
-</nav>;
+</nav>
+)
 }
 
 export default Navbar
