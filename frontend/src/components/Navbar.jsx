@@ -13,7 +13,7 @@ const Navbar = () => {
   const queryClient=useQueryClient();
 
 // logout mutation
-  const {mutation:logoutMutation}=useMutation({
+  const {mutate:logoutMutation}=useMutation({
     mutationFn:logout,
     onSuccess: ()=> queryClient.invalidateQueries({queryKey:["authUser"]})
   });
