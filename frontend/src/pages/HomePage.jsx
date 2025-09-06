@@ -9,7 +9,7 @@
 // import { Link } from "react-router";
 // import { CheckCircleIcon, MapPinIcon, UserPlusIcon, UsersIcon } from "lucide-react";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+// import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 // import { capitialize } from "../lib/utils";
 
@@ -173,9 +173,9 @@ import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 // export default HomePage;
 // ***********************************************************
-import { useQuery,useQueryClient } from "@tanstack/react-query";
+import {useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { getRecommendedUsers,getUserFriends } from "../lib/api";
+import { getRecommendedUsers,getUserFriends,getOutgoingFriendReqs} from "../lib/api";
 
 const HomePage = () => {
   const queryClient=useQueryClient();
@@ -194,7 +194,13 @@ const HomePage = () => {
     queryKey:["outgoingFriendReqs"],
     queryFn: getOutgoingFriendReqs,
   });
-  
+
+  // mutation to send friends request
+  const { mutate:sendRequestMutation,isPending}=useMutation({
+    mutationFn: sendFriendrequest,
+    onSuccess:()=>queryClient.invalidateQueries({queryKey:["outgoingFriendReqs"]}),
+  });
+
   return (
     <div>
       
