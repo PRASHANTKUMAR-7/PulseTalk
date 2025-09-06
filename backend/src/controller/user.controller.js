@@ -9,7 +9,7 @@ export async function getRecommendedUsers(req,res){
         const recommendedUsers=await User.find({
             $and:[
                 {_id:{$ne: currentUserId}}, //exclude current user
-                {_id:{$min: currentUser.friends}},//exclude user which are already friends
+                {_id:{$nin: currentUser.friends}},//exclude user which are already friends
                 {isOnboarded:true}
             ]
         })
@@ -25,7 +25,7 @@ export async function getRecommendedUsers(req,res){
 export async function getMyFriends(req,res){
     try {
         const user=await User.findById(req.user.id)
-        .selext("friends")
+        .select("friends")
         .populate("friends","fullName profilePic nativeLanguage learningLanguage");
 
         res.status(200).json(user.friends);

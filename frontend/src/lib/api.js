@@ -1,21 +1,19 @@
 import { axiosInstance } from "./axios";
 
- export const signup=async(signupData)=>{
-    const response=await axiosInstance.post("/auth/signup", signupData);
-    return response.data;
-    };
+export const signup = async (signupData) => {
+  const response = await axiosInstance.post("/auth/signup", signupData);
+  return response.data;
+};
 
- export const login=async(loginData)=>{
-    const response=await axiosInstance.post("/auth/login", loginData);
-    return response.data;
-    };
-
-  export const logout = async () => {
+export const login = async (loginData) => {
+  const response = await axiosInstance.post("/auth/login", loginData);
+  return response.data;
+};
+export const logout = async () => {
   const response = await axiosInstance.post("/auth/logout");
   return response.data;
 };
-   
-// trycatch is used because if we log out then the authUser become false due to return null here and we redirect to login page after logout
+
 export const getAuthUser = async () => {
   try {
     const res = await axiosInstance.get("/auth/me");
@@ -26,32 +24,42 @@ export const getAuthUser = async () => {
   }
 };
 
-// api for saving extra data of users 
-export const completeOnboarding=async(userData)=>{
-  const response=await axiosInstance.post("/auth/onboarding", userData);
+export const completeOnboarding = async (userData) => {
+  const response = await axiosInstance.post("/auth/onboarding", userData);
   return response.data;
 };
 
-// api for friends list
 export async function getUserFriends() {
   const response = await axiosInstance.get("/users/friends");
   return response.data;
-};
+}
 
-// api for recommended friends list
 export async function getRecommendedUsers() {
   const response = await axiosInstance.get("/users");
-  return response.data;
-};
+  return response.data.recommendedUsers;
+}
 
-// api for took care of sending friend-request or not
 export async function getOutgoingFriendReqs() {
   const response = await axiosInstance.get("/users/outgoing-friend-requests");
   return response.data;
-};
+}
 
-//api for sending friends request
-export async function sendFriendrequest(userId){
- const response = await axiosInstance.post(`/user/friend-request/${userId}`);
- return response.data;
+export async function sendFriendRequest(userId) {
+  const response = await axiosInstance.post(`/users/friend-request/${userId}`);
+  return response.data;
+}
+
+export async function getFriendRequests() {
+  const response = await axiosInstance.get("/users/friend-requests");
+  return response.data;
+}
+
+export async function acceptFriendRequest(requestId) {
+  const response = await axiosInstance.put(`/users/friend-request/${requestId}/accept`);
+  return response.data;
+}
+
+export async function getStreamToken() {
+  const response = await axiosInstance.get("/chat/token");
+  return response.data;
 }

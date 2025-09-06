@@ -1,29 +1,26 @@
 import express from "express";
 import { protectedRoute } from "../middleware/auth.middleware.js";
-import {acceptFriendRequest, getFriendRequest, 
-getMyFriends ,getOutgoingFriendReqs,
-getRecommendedUsers,sendFriendRequest} from "../controller/user.controller.js";
+import {
+  acceptFriendRequest,
+  getFriendRequest,
+  getMyFriends,
+  getOutgoingFriendReqs,
+  getRecommendedUsers,
+  sendFriendRequest,
+} from "../controller/user.controller.js";
 
-const router=express.Router();
+const router = express.Router();
 
-//apply auth middleware to all route
+// apply auth middleware to all routes
 router.use(protectedRoute);
 
-router.get("/",getRecommendedUsers);
-router.get("/friends",getMyFriends);
+router.get("/", getRecommendedUsers);
+router.get("/friends", getMyFriends);
 
-//route for sending friend request
 router.post("/friend-request/:id", sendFriendRequest);
-//route for accepting a freind request
-router.put("/friend-request/:id/accept",acceptFriendRequest);
+router.put("/friend-request/:id/accept", acceptFriendRequest);
 
-//future scope
-//reject friend request route
-
-// friend request we get and its status
-router.get("/friend-request/",getFriendRequest);
-
-//route to avoid the user whome the present user send friend request
-router.get("/outgoing-friend-request", getOutgoingFriendReqs)
+router.get("/friend-requests", getFriendRequest);
+router.get("/outgoing-friend-requests", getOutgoingFriendReqs);
 
 export default router;
