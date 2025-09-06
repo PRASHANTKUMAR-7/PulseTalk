@@ -1,10 +1,10 @@
 import useAuthUser from '../hooks/useAuthUser'
 import { useLocation } from 'react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {MessageSquareHeart,BellIcon} from "lucide-react";
+import {MessageSquareHeart,BellIcon,LogOutIcon} from "lucide-react";
 import { Link } from 'react-router';
 import { logout } from '../lib/api';
-
+import ThemeSelector from './ThemeSelector';
 const Navbar = () => {
   const {authUser}=useAuthUser();
   const location= useLocation();
@@ -41,6 +41,15 @@ const Navbar = () => {
         </Link>
       </div>
       <ThemeSelector/>
+      <div className="avatar">
+        <div className="w-12 rounded-full">
+          <img src={authUser?.profilePic} alt="User Avatar" rel="noreferrer"/>
+        </div>
+        {/* logout */}
+        <button className="btn btn-ghost btn-circle" onClick={logoutMutation}>
+          <LogOutIcon className="h-6 w-6 text-base-content opacity-70"/>
+        </button>
+      </div>
     </div>
   </div>
 </nav>

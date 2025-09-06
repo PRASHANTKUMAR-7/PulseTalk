@@ -1,5 +1,6 @@
 const ThemeSelector=()=>{
     return (
-        <div>Hello</div>
+        <div>ThemeSelector</div>
     )
 }
+export default ThemeSelector
