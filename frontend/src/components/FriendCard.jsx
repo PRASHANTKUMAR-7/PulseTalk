@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { LANGUAGE_TO_FLAG } from "../constants";
 
 const FriendCard = ({ friend }) => {
   return (
@@ -11,30 +12,28 @@ const FriendCard = ({ friend }) => {
           </div>
           <h3 className="font-semibold truncate">{friend.fullName}</h3>
         </div>
-        {/* Language Showing */}
-        <div className="flex flex-wrap gap-1.5 mb-3">
-            <span className="badge badge-secondary text-xs">
-                {getLanguageFlag(friend.nativeLanguage)}
-                Native: {friend.nativeLanguage}
-            </span>
 
-            <span className="badge badge-outline text-xs">
-                {getLanguageFlag(friend.learningLanguage)}
-                Learning: {friend.learningLanguage}
-            </span>
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          <span className="badge badge-secondary text-xs">
+            {getLanguageFlag(friend.nativeLanguage)}
+            Native: {friend.nativeLanguage}
+          </span>
+          <span className="badge badge-outline text-xs">
+            {getLanguageFlag(friend.learningLanguage)}
+            Learning: {friend.learningLanguage}
+          </span>
         </div>
+
         <Link to={`/chat/${friend._id}`} className="btn btn-outline w-full">
-            Message
+          Message
         </Link>
       </div>
     </div>
   );
 };
-
 export default FriendCard;
 
-
-function getLanguageFlag(language) {
+export function getLanguageFlag(language) {
   if (!language) return null;
 
   const langLower = language.toLowerCase();
@@ -49,6 +48,5 @@ function getLanguageFlag(language) {
       />
     );
   }
-
   return null;
 }

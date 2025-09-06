@@ -75,8 +75,25 @@ const HomePage = () => {
                 Discover perfect language exchange partners based on your profile
               </p>
             </div>
+              {loadingUsers ? (
+                <div className="flex justify-center py-12">
+                  <span className="loading loading-spinner loading-lg" />
+                </div>
+              ) : recommendedUsers.length === 0 ? (
+                <div className="card bg-base-200 p-6 text-center">
+                  <h3 className="font-semibold text-lg mb-2">No recommendations available</h3>
+                  <p className="text-base-content opacity-70">
+                    Check back later for new language partners!
+                  </p>
+                </div>
+              ) : (
+                <div>
+
+                  
+                </div>
+              )}
           </div>
-        </div>
+        </div>        
       </section> 
     </div>
 </div>
