@@ -28,10 +28,9 @@ const App = () => {
       {/* <button onClick={()=>toast.error("Hello World")}>Create a Toast</button> //using react hot toast */}
       <Routes>
         <Route path="/" element= {isAuthenticated && isOnboarded?(
-         <Layout showSidebarporps={true}>
+        <Layout showSidebarporps={true}>
           <HomePage/>
-         </Layout>
-          
+        </Layout>          
           ):(
           <Navigate to={!isAuthenticated? "/login" : "/onboarding"}/>)}/>  {/* if authUser is correct means authorised and onboarded user then open homepage unless redirect to login if not autheticate and if yes then onboarded page  */}
         <Route path="/signup" element= {!isAuthenticated?<SignUpPage/> :<Navigate to={ isOnboarded ? "/" : "/onboarding"}/>}/> 
