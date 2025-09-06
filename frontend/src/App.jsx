@@ -10,6 +10,7 @@ import {Toaster} from "react-hot-toast";
 import  PageLoader from './components/PageLoader.jsx';
 import useAuthUser from './hooks/useAuthUser.js';
 import Layout from './components/Layout.jsx';
+import { useThemeStore } from './store/useThemeStore.js';
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
   //axios for frontend and backend relation
   //react querry or tanstack querry from custome hook useAuthUser
    const {isLoading,authUser}=useAuthUser();//we use user b/c in auth.route we use user
+   const {theme}=useThemeStore(); //to change theme
    const isAuthenticated = Boolean(authUser);
    const isOnboarded = authUser?.isOnboarded
 
@@ -24,7 +26,7 @@ const App = () => {
 
 
   return (
-    <div className="h-screen" data-theme="night">
+    <div className="h-screen" data-theme={theme}>
       {/* <button onClick={()=>toast.error("Hello World")}>Create a Toast</button> //using react hot toast */}
       <Routes>
         <Route path="/" element= {isAuthenticated && isOnboarded?(
