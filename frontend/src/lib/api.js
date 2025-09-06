@@ -26,7 +26,26 @@ export const getAuthUser = async () => {
   }
 };
 
+// api for saving extra data of users 
 export const completeOnboarding=async(userData)=>{
   const response=await axiosInstance.post("/auth/onboarding", userData);
+  return response.data;
+};
+
+// api for friends list
+export async function getUserFriends() {
+  const response = await axiosInstance.get("/users/friends");
+  return response.data;
+};
+
+// api for recommended friends list
+export async function getRecommendedUsers() {
+  const response = await axiosInstance.get("/users");
+  return response.data;
+};
+
+// api for took care of sending friend-request or not
+export async function getOutgoingFriendReqs() {
+  const response = await axiosInstance.get("/users/outgoing-friend-requests");
   return response.data;
 };

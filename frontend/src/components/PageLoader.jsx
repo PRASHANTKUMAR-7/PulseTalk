@@ -1,9 +1,11 @@
 import { LoaderIcon } from 'lucide-react'
+import { useThemeStore } from '../store/useThemeStore';
 
 const PageLoader = () => {
+  const{theme}=useThemeStore();
   return (
-    <div className='min-h-screen flex items-center justify-center'>
-        <LoaderIcon className='animate-spin size-10 text-primary'/>      
+    <div className='min-h-screen flex items-center justify-center' data-theme={theme}>
+        <LoaderIcon className='animate-spin size-12 text-primary'/>      
     </div>
   );
 };
@@ -35,7 +37,7 @@ export default PageLoader
 
 //   return (
 //     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-950">
-//       <div className="w-[60%] p-6 rounded-2xl shadow-lg bg-white dark:bg-gray-900">
+//       <div className="w-[30%] p-6 rounded-2xl shadow-lg bg-white dark:bg-gray-900">
 //         {/* Conversation bubbles */}
 //         <div className="space-y-4 mb-6">
 //           {/* Male bubble (left) */}
