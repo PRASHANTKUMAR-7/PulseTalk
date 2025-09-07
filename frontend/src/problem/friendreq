@@ -2,3 +2,5 @@
 but then reciever also getting same request it must be like you accepted "sender name" friend request
 
 2:=somewhere is "/notifications" is used instead of "/notification" find and resolve it 
+
+3:Adding time to friend that for how long sender and reciever are friends
