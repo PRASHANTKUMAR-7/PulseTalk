@@ -11,6 +11,7 @@ import  PageLoader from './components/PageLoader.jsx';
 import useAuthUser from './hooks/useAuthUser.js';
 import Layout from './components/Layout.jsx';
 import { useThemeStore } from './store/useThemeStore.js';
+import NotFoundPage from './components/NotFoundPage.jsx';
 
 
 const App = () => {
@@ -102,6 +103,8 @@ const App = () => {
             )
           }
         />
+        {/* Catch-all 404 page */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Toaster />
     </div>
