@@ -28,7 +28,7 @@ export const completeOnboarding = async (userData) => {
   const response = await axiosInstance.post("/auth/onboarding", userData);
   return response.data;
 };
-
+//*---- Friends Api ----*//
 export async function getUserFriends() {
   const response = await axiosInstance.get("/users/friends");
   return response.data;
@@ -62,4 +62,9 @@ export async function acceptFriendRequest(requestId) {
 export async function getStreamToken() {
   const response = await axiosInstance.get("/chat/token");
   return response.data;
+}
+//*---- Notification Api ----*//
+export async function getFriendRequests(){
+   const response = await axiosInstance.get("/users/friend-requests");
+   return response.data;
 }
