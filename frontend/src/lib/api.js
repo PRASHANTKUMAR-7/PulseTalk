@@ -64,12 +64,12 @@ export async function getStreamToken() {
   return response.data;
 }
 //*---- Notification Api ----*//
-export async function getFriendRequests(){
+export async function getFriendRequest(){
    const response = await axiosInstance.get("/users/friend-requests");
    return response.data;
 }
 
-export async function acceptFriendRequest(requestId){
+export async function acceptFriendRequests(requestId){
   const response=await axiosInstance.put(`/users/friend-request/${requestId}/accept`);
   return response.data;
 }
