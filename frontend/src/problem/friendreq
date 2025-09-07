@@ -1,0 +1,4 @@
+1:= the sender of friend request get the msg after reciver accepted the request that "Reciever accept the friend request"
+but then reciever also getting same request it must be like you accepted "sender name" friend request
+
+2:=somewhere is "/notifications" is used instead of "/notification" find and resolve it 

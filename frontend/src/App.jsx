@@ -104,7 +104,7 @@ const App = () => {
           }
         />
         {/* Catch-all 404 page */}
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage/>} />
       </Routes>
       <Toaster />
     </div>
