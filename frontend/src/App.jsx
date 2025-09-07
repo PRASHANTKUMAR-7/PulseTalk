@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import HomePage from "./pages/HomePage.jsx";
 import SignUpPage from "./pages/SighUpPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import NotificationPage from "./pages/NotificationPage.jsx";
+import NotificationPage from "./pages/NotificationFound.jsx";
 // import CallPage from "./pages/CallPage.jsx";
 // import ChatPage from "./pages/ChatPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
