@@ -46,7 +46,7 @@ const Sidebar = () => {
     }`}
   >
     <BellIcon className="size-5 text-base-content opacity-70" />
-    <span>Notification</span>
+    <span>Notifications</span>
   </Link>
 </nav>
 {/* User Profile Section */}
