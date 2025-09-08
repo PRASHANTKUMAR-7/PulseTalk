@@ -77,7 +77,7 @@ const App = () => {
         /> */}
 
         <Route
-          path="/chat/:id"
+          path="/chat/:id" //we use here id then in useParams we must use id means same name
           element={
             isAuthenticated && isOnboarded ? (
               <Layout showSidebarporps={false}>
