@@ -83,6 +83,7 @@ const ChatPage = () => {
               <MessageInput focus/>
             </Window>
           </div>
+          <Thread/>
         </Channel>
       </Chat>
     </div>

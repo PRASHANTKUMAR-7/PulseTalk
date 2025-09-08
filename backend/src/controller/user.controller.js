@@ -156,8 +156,8 @@ export async function acceptFriendRequest(req,res){
 
         //add both the user id in their friends list
         //$addToSet: adds element to an array only if they do not exit already.
-        await User.findByIdAndUpdate(friendRequest.sender,{
-            $addToSet:{ friends:friendRequest.recipient},
+        await User.findByIdAndUpdate(friendRequest.recipient,{
+            $addToSet:{ friends:friendRequest.sender},
         });
         res.status(200).json({message:"Friends request accepted"});
 
