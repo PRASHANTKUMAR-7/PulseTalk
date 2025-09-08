@@ -70,6 +70,14 @@ const ChatPage = () => {
     initChat();
   },[tokenData,authUser,targetUserId]);
 
+
+//handling video call--------
+  const handleVideoCall =()=>{
+
+  };
+
+
+
   if(loading || !chatClient || !channel) return <ChatLoader/>;
 
   return (
@@ -77,6 +85,7 @@ const ChatPage = () => {
       <Chat client={chatClient}>
         <Channel channel={channel}>
           <div className="w-full relative">
+            <CallButton handleVideoCall={handleVideoCall}/>
             <Window>
               <ChannelHeader/>
               <MessageList/>
