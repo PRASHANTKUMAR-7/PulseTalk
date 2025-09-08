@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@stream-io/video-react-sdk": "^1.20.2",
     "axios": "^1.11.0",
     "lucide-react": "^0.542.0",
     "react": "^19.1.1",
