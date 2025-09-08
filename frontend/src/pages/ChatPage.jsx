@@ -20,21 +20,21 @@ import ChatLoader from "../components/ChatLoader";
 const ChatPage = () => {
   const {id:targetUserId}=useParams();
 
-  const {chatClient, setChatClient} = useState(null);
-  const {channel, setChannel} = useState(true);
-  const {loading, setLoading} = useState(true);
+  const [chatClient, setChatClient] = useState(null);
+  const [channel, setChannel] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const {authUser} = useAuthUser();
 
   const {data:tokenData}=useQuery({
     queryKey: ["streamToken"],
-    querryFn:getStreamToken,
+    queryFn: getStreamToken,
     enabled: !!authUser //this useQuery will run only when user is authorised1
   });
 
   useEffect(()=>{
     const initChat = async ()=>{
-      if(!tokenData?.token || authUser) return ;
+      if (!tokenData?.token || !authUser) return;
 
       try { //this whole try block handel chat 
         console.log("Initializing stream chat client...");
@@ -46,7 +46,7 @@ const ChatPage = () => {
           image:authUser.profilePic,
         },tokenData.token)
         
-        const channelId = [authUser._id, targetUserId.sort().join("-")]; //creating a channel id
+        const channelId = [authUser._id, targetUserId].sort().join("-"); //creating a channel id
         // you and me
         // if i start the chat => channelId: [myId, yourId]
         // if you start the chat => channelId: [yourId, myId](both are same but for human not for computer so sort, after sorting) => [myId, yourId]
@@ -64,7 +64,7 @@ const ChatPage = () => {
         toast.error("Could not connect to chat. Please try again.");
       } 
       finally {
-        setLoading(false);
+       setLoading(false);
       }
     };
     initChat();
