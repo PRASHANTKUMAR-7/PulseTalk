@@ -65,7 +65,7 @@ const App = () => {
             )
           }
         />
-        {/* <Route
+        <Route
           path="/call/:id"
           element={
             isAuthenticated && isOnboarded ? (
@@ -74,7 +74,7 @@ const App = () => {
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
           }
-        /> */}
+        />
 
         <Route
           path="/chat/:id" //we use here id then in useParams we must use id means same name
