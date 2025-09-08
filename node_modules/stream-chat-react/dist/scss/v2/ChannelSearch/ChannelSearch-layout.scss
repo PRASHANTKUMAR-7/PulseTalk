@@ -1,0 +1,122 @@
+@use '../utils';
+
+.str-chat__channel-search {
+  $search-bar-height: 65px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &.str-chat__channel-search--active.str-chat__channel-search--inline,
+  &.str-chat__channel-search--with-results.str-chat__channel-search--inline {
+    height: 100%;
+  }
+
+  &.str-chat__channel-search--inline {
+    min-height: 0;
+  }
+
+  .str-chat__channel-search-bar {
+    @include utils.flex-row-center;
+    padding: var(--str-chat__spacing-2_5);
+    height: $search-bar-height;
+
+    .str-chat__channel-search-bar-button {
+      @include utils.button-reset;
+      width: calc(var(--str-chat__spacing-px) * 40);
+      height: calc(var(--str-chat__spacing-px) * 40);
+      padding: var(--str-chat__spacing-2_5);
+      cursor: pointer;
+    }
+
+    .str-chat__channel-search-input--wrapper {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      padding: var(--str-chat__spacing-2_5);
+      min-width: 0;
+
+      .str-chat__channel-search-input--icon,
+      .str-chat__channel-search-input--clear-button {
+        display: inline-flex;
+        padding: 0 var(--str-chat__spacing-2_5);
+      }
+
+      .str-chat__channel-search-input--clear-button {
+        @include utils.button-reset;
+        cursor: pointer;
+
+        &:disabled {
+          cursor: default;
+        }
+      }
+
+      input {
+        flex: 1;
+        min-width: 0;
+      }
+    }
+  }
+
+  .str-chat__channel-search-container-searching {
+    width: 100%;
+    padding: var(--str-chat__spacing-5) var(--str-chat__spacing-4);
+  }
+
+  .str-chat__channel-search-results-header {
+    width: 100%;
+    padding: var(--str-chat__spacing-5) var(--str-chat__spacing-4);
+  }
+
+
+  .str-chat__channel-search-result-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &.inline {
+      flex: 1;
+    }
+
+    &.popup {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: $search-bar-height;
+      height: 400px;
+      // have to add z-index as since 1.2023 avatar has position relative
+      // and the ones from channel list would show above search results
+      z-index: 1;
+    }
+
+    .str-chat__channel-search-container-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: var(--str-chat__spacing-5) var(--str-chat__spacing-4);
+
+      svg {
+        height: calc(var(--str-chat__spacing-px) * 90 + var(--str-chat__spacing-20));
+        width: calc(var(--str-chat__spacing-px) * 90);
+        padding: var(--str-chat__spacing-10) 0;
+      }
+    }
+
+    .str-chat__channel-search-result {
+      @include utils.button-reset;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      column-gap: var(--str-chat__spacing-2);
+      padding: var(--str-chat__spacing-3) var(--str-chat__spacing-2);
+
+      .channel-search__result-text,
+      .str-chat__channel-search-result--display-name {
+        @include utils.ellipsis-text;
+        @include utils.prevent-glitch-text-overflow;
+      }
+    }
+  }
+}

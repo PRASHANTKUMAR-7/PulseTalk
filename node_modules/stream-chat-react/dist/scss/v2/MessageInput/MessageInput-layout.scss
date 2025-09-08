@@ -1,0 +1,260 @@
+@use '../utils';
+
+.str-chat__message-input {
+  $send-button-size: calc(var(--str-chat__spacing-px) * 45);
+  $start-audio-recording-button-size: calc(var(--str-chat__spacing-px) * 40);
+
+  @include utils.flex-col-center;
+  width: 100%;
+  padding: var(--str-chat__spacing-1) var(--str-chat__spacing-2);
+
+  position: relative;
+
+  .str-chat__quoted-message-preview-header {
+    @include utils.flex-row-center;
+    width: 100%;
+
+    .str-chat__quoted-message-reply-to-message {
+      width: 100%;
+      text-align: center;
+    }
+
+    .str-chat__quoted-message-remove {
+      width: calc(var(--str-chat__spacing-px) * 40);
+      height: calc(var(--str-chat__spacing-px) * 40);
+      cursor: pointer;
+    }
+  }
+
+  .str-chat__message-input-inner {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .str-chat__file-input-container {
+      --str-chat-icon-height: calc(var(--str-chat__spacing-px) * 24);
+      @include utils.flex-row-center;
+      width: calc(var(--str-chat__spacing-px) * 45);
+      height: calc(var(--str-chat__spacing-px) * 45);
+      cursor: pointer;
+
+      .str-chat__file-input-label {
+        @include utils.flex-row-center;
+        cursor: pointer;
+      }
+    }
+
+    .str-chat__message-textarea-container {
+      @include utils.flex-col-center;
+      width: 100%;
+      min-width: 0;
+      max-height: 100%;
+
+      .str-chat__message-textarea-with-emoji-picker {
+        width: 100%;
+        min-height: 0;
+        max-height: 100%;
+        display: flex;
+        padding: var(--str-chat__spacing-2) var(--str-chat__spacing-4);
+        column-gap: var(--str-chat__spacing-2);
+
+        .str-chat__message-textarea {
+          width: 100%;
+          display: flex;
+          max-height: 100%;
+          overflow-y: auto;
+          overflow-x: hidden;
+          padding: 0;
+        }
+
+        .str-chat__message-textarea-emoji-picker {
+          @include utils.flex-row-center;
+          width: calc(var(--str-chat__spacing-px) * 27);
+          height: calc(var(--str-chat__spacing-px) * 27);
+          font-size: calc(var(--str-chat__spacing-px) * 27);
+          align-self: end;
+
+          .str-chat__message-textarea-emoji-picker-container {
+            z-index: 5;
+
+            .str-chat__emoji-picker-container {
+              display: flex;
+            }
+          }
+
+          .str-chat__emoji-picker-button {
+            @include utils.unset-button;
+            display: flex;
+            cursor: pointer;
+
+            svg {
+              width: calc(var(--str-chat__spacing-px) * 24);
+              height: calc(var(--str-chat__spacing-px) * 24);
+
+              path {
+                fill: var(--str-chat__message-input-tools-color);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .str-chat__message-textarea-angular-host {
+    @include utils.flex-row-center;
+    width: 100%;
+  }
+
+  .str-chat__message-textarea-react-host {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .str-chat__stop-ai-generation-button {
+    width: calc(var(--str-chat__spacing-px) * 30);
+    height: calc(var(--str-chat__spacing-px) * 28);
+    cursor: pointer;
+  }
+
+  .str-chat__send-button {
+    --str-chat-icon-height: calc(var(--str-chat__spacing-px) * 32);
+    @include utils.flex-row-center;
+    cursor: pointer;
+    padding: 0;
+    width: $send-button-size;
+    height: $send-button-size;
+    min-width: $send-button-size;
+
+    svg {
+      width: calc(var(--str-chat__spacing-px) * 32);
+      height: calc(var(--str-chat__spacing-px) * 32);
+    }
+  }
+
+  .str-chat__start-recording-audio-button {
+    --str-chat-icon-height: calc(var(--str-chat__spacing-px) * 25);
+    @include utils.flex-row-center;
+    cursor: pointer;
+    padding: 0;
+    width: $start-audio-recording-button-size;
+    height: $start-audio-recording-button-size;
+    min-width: $start-audio-recording-button-size;
+
+    svg {
+      height: calc(var(--str-chat__spacing-px) * 25);
+    }
+  }
+
+  .str-chat__message-input-cooldown {
+    @include utils.flex-row-center;
+    margin-inline-start: var(--str-chat__spacing-2);
+    margin-block: calc(var(--str-chat__spacing-2) / 2);
+    min-width: calc(#{$send-button-size} - var(--str-chat__spacing-2));
+    min-height: calc(#{$send-button-size} - var(--str-chat__spacing-2));
+  }
+
+  .str-chat__message-input-not-allowed {
+    align-self: center;
+    padding: var(--str-chat__spacing-3);
+  }
+
+  .str-chat__quoted-message-preview {
+    padding: var(--str-chat__spacing-2);
+
+    .str-chat__quoted-poll-preview__name {
+      @include utils.ellipsis-text();
+      overflow-x: hidden; // force ellipsis to show
+    }
+  }
+
+  .str-chat__recording-permission-denied-notification {
+    position: absolute;
+    left: 0.5rem;
+    max-width: 100%;
+    bottom: 100%;
+    padding: 1rem;
+    margin-inline: 0.5rem;
+    z-index: 2;
+
+    .str-chat__recording-permission-denied-notification__dismiss-button-container {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.str-chat__message-input-angular-host {
+  max-height: 50%;
+}
+
+.str-chat-angular__message-input {
+  height: 100%;
+  max-height: 100%;
+}
+
+.str-chat-angular__message-input-inner {
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  flex-grow: initial;
+}
+
+[dir='rtl'] .str-chat__send-button,
+[dir='rtl'] .str-chat__start-recording-audio-button {
+  svg {
+    transform: scale(-1, 1);
+  }
+}
+
+.str-chat__attachment-selector-actions-menu,
+.str-chat__attachment-selector {
+  button {
+    @include utils.button-reset;
+  }
+}
+
+.str-chat__attachment-selector {
+  .str-chat__attachment-selector__menu-button {
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+
+    .str-chat__attachment-selector__menu-button__icon {
+      height: 26px;
+      width: 26px;
+    }
+  }
+}
+
+.str-chat__file-input {
+  display: none;
+}
+
+.str-chat__attachment-selector-actions-menu {
+  min-width: 300px;
+  padding-block: 0.5rem;
+}
+
+.str-chat__send-to-channel-checkbox__container {
+  width: 100%;
+  display: flex;
+  padding: 0.5rem 0.75rem;
+
+  .str-chat__send-to-channel-checkbox__field {
+    display: flex;
+    align-items: center;
+
+    label {
+      padding-inline: 0.5rem;
+    }
+
+    input {
+      margin: 0;
+    }
+  }
+}

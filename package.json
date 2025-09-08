@@ -3,6 +3,8 @@
     "axios": "^1.11.0",
     "lucide-react": "^0.542.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "stream-chat": "^9.19.0",
+    "stream-chat-react": "^13.6.2"
   }
 }

@@ -1,0 +1,39 @@
+import { useEffect, useState } from 'react';
+export const AIStates = {
+    Error: 'AI_STATE_ERROR',
+    ExternalSources: 'AI_STATE_EXTERNAL_SOURCES',
+    Generating: 'AI_STATE_GENERATING',
+    Idle: 'AI_STATE_IDLE',
+    Thinking: 'AI_STATE_THINKING',
+};
+/**
+ * A hook that returns the current state of the AI.
+ * @param {Channel} channel - The channel for which we want to know the AI state.
+ * @returns {{ aiState: AIState }} The current AI state for the given channel.
+ */
+export const useAIState = (channel) => {
+    const [aiState, setAiState] = useState(AIStates.Idle);
+    useEffect(() => {
+        if (!channel) {
+            return;
+        }
+        const indicatorChangedListener = channel.on('ai_indicator.update', (event) => {
+            const { cid } = event;
+            const state = event.ai_state;
+            if (channel.cid === cid) {
+                setAiState(state);
+            }
+        });
+        const indicatorClearedListener = channel.on('ai_indicator.clear', (event) => {
+            const { cid } = event;
+            if (channel.cid === cid) {
+                setAiState(AIStates.Idle);
+            }
+        });
+        return () => {
+            indicatorChangedListener.unsubscribe();
+            indicatorClearedListener.unsubscribe();
+        };
+    }, [channel]);
+    return { aiState };
+};
