@@ -1,6 +1,8 @@
 import { useParams } from "react-router"
 import useAuthUser from "../hooks/useAuthUser";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getStreamToken } from "../lib/api";
 import {
   StreamVideo,
   StreamVideoClient,
@@ -26,13 +28,15 @@ const CallPage = () => {
   const [call, setCall] = useState(null);
   const [isConnecting, setIsConnecting] = useState(true);
 
+  const{authUser , isLoading} = useAuthUser();
+  
   const {data:tokenData}=useQuery({
     queryKey: ["streamToken"],
     queryFn: getStreamToken,
-    enabled: !!authUser //this useQuery will run only when user is authorised1
+    enabled: !!authUser //this useQuery will run only when user is authorised
   });
 
-  const{authUser , isLoading} = useAuthUser();
+  
 
   useEffect(()=>{
     const initCall = async()=>{
@@ -71,7 +75,7 @@ const CallPage = () => {
   },[tokenData,authUser,callId]);
   
   if(isLoading || isConnecting) return <PageLoader/>
-  
+
   
   return (
     <div className="h-screen flex flex-col items-center justify-center">
