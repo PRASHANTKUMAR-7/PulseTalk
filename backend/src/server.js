@@ -30,12 +30,12 @@ app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.use(express.static(path.join(__dirname, "../frontend/dist"))); //check out later for it use
 
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
   });
-}
+} //this if code make our backend and fronend to run in single environment
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
