@@ -7,5 +7,25 @@
     "react-dom": "^19.1.1",
     "stream-chat": "^9.19.0",
     "stream-chat-react": "^13.6.2"
-  }
+  },
+  "name": "pulsetalk",
+  "version": "1.0.0",
+  "description": "**PulseTalk** is a real-time chat and video calling application built using the **MERN stack** (MongoDB, Express.js, React.js, Node.js). It enables users to send instant messages, make high-quality video calls, and stay connected through a clean, modern interface. Designed with real-time communication at its core, PulseTalk is fast, responsive, and secure.",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm install --prefix backend && npm install --prefix frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PRASHANTKUMAR-7/PulseTalk.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/PRASHANTKUMAR-7/PulseTalk/issues"
+  },
+  "homepage": "https://github.com/PRASHANTKUMAR-7/PulseTalk#readme"
 }
