@@ -92,8 +92,8 @@ Visit `http://localhost:5173` to view the app.
 **Prashant**
 MERN Stack Developer | DSA Enthusiast | Future FAANG Engineer
 
-* 📧 Email: [your.email@example.com](prashantk.stu@gmail.com)
-* 🔗 LinkedIn: [linkedin.com/in/yourprofile](https://www.linkedin.com/in/prashant-kumar-b82a07380/)
+* 📧 Email: (prashantk.stu@gmail.com)
+* 🔗 LinkedIn:(https://www.linkedin.com/in/prashant-kumar-b82a07380/)
 * 💼 Portfolio: *Coming soon*
 
 ## 🤝 Contributing
