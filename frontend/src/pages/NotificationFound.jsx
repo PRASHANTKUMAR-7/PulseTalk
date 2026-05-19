@@ -1,9 +1,9 @@
-import { useMutation,useQuery, useQueryClient } from "@tanstack/react-query";
-import { acceptFriendRequests, getFriendRequest } from "../lib/api";
-import { BellIcon, UserCheckIcon,ClockIcon,MessageSquareIcon } from "lucide-react";
-import NoNotificationsFound from "../components/NoNotificationPage";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { BellIcon, ClockIcon, MessageSquareIcon, UserCheckIcon } from "lucide-react";
 import { useEffect } from "react";
+import NoNotificationsFound from "../components/NoNotificationPage";
 import { useMarkAsRead } from "../hooks/useNotifications";
+import { acceptFriendRequest, getFriendRequests } from "../lib/api";
 
 
 const NotificationPage = () => {
@@ -15,18 +15,18 @@ useEffect(() => {
   markAsRead();
 }, []);
 
-  const {data:friendRequests,isLoading}=useQuery({
-    queryKey: ["friendRequests"],
-    queryFn: getFriendRequest,
-  });
+  const { data: friendRequests, isLoading } = useQuery({
+  queryKey: ["friendRequests"],
+  queryFn: getFriendRequests,  // remove the S from getFriendRequest
+});
 //if friend request accepted then immediately show in friend list
-  const {mutate: acceptRequestMutation, isPending}=useMutation({
-    mutationFn:acceptFriendRequests,
-    onSuccess:()=>{
-      queryClient.invalidateQueries({queryKey:["friendRequests"]});
-      queryClient.invalidateQueries({queryKey:["friends"]})
-    }
-  });
+  const { mutate: acceptRequestMutation, isPending } = useMutation({
+  mutationFn: acceptFriendRequest,  // remove the S
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ["friendRequests"] });
+    queryClient.invalidateQueries({ queryKey: ["friends"] });
+  },
+});
 
   const incomingRequests = friendRequests?.incomingReqs || []; //from backend user.controller.js incomingReqs 
   const acceptedRequests = friendRequests?.acceptedReqs || []; //from backend user.controller.js acceptedReqs
@@ -89,7 +89,7 @@ useEffect(() => {
           </section>
         )}
         {/* Accept Friend Request */}
-        {acceptFriendRequests.length>0 && (
+        {acceptedRequests.length > 0 && (
           <section className="space-y-4">
             <h2 className="text=xl font-semibold flex items-center gap-2">
               <BellIcon className="h-5 w-5 text-success"/>

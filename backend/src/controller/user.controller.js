@@ -174,8 +174,6 @@ export async function acceptFriendRequest(req,res){
         sender: friendRequest.recipient,
         type: "friend_accepted",
       });
-
-res.status(200).json({ message: "Friends request accepted" });
         res.status(200).json({message:"Friends request accepted"});
 
     } catch(error){
@@ -254,3 +252,10 @@ export async function getOutgoingFriendReqs(req, res) {
         res.status(500).json({ message: "Internal Server Error" });
    } 
 }
+
+
+
+
+
+
+//*************************************** */

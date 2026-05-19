@@ -1,15 +1,15 @@
 import express from "express";
-import { protectRoute } from "../middleware/auth.middleware.js";
 import {
   getNotifications,
   getUnreadCount,
   markAllAsRead,
-} from "../controllers/notification.controller.js";
+} from "../controller/notification.controller.js";
+import { protectedRoute } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/",            protectRoute, getNotifications);
-router.get("/unread-count",protectRoute, getUnreadCount);
-router.patch("/mark-read", protectRoute, markAllAsRead);
+router.get("/", protectedRoute, getNotifications);
+router.get("/unread-count", protectedRoute, getUnreadCount);
+router.patch("/mark-read", protectedRoute, markAllAsRead);
 
 export default router;
