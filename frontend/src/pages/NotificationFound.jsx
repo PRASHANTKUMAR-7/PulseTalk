@@ -2,11 +2,18 @@ import { useMutation,useQuery, useQueryClient } from "@tanstack/react-query";
 import { acceptFriendRequests, getFriendRequest } from "../lib/api";
 import { BellIcon, UserCheckIcon,ClockIcon,MessageSquareIcon } from "lucide-react";
 import NoNotificationsFound from "../components/NoNotificationPage";
-
+import { useEffect } from "react";
+import { useMarkAsRead } from "../hooks/useNotifications";
 
 
 const NotificationPage = () => {
   const queryClient = useQueryClient();
+  const { mutate: markAsRead } = useMarkAsRead();
+
+// Mark all as read as soon as user opens this page
+useEffect(() => {
+  markAsRead();
+}, []);
 
   const {data:friendRequests,isLoading}=useQuery({
     queryKey: ["friendRequests"],
