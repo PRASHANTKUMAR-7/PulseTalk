@@ -61,18 +61,18 @@ export async function acceptFriendRequest(requestId) {
 
 
 //*---- Notification Api ----*//
-export async function getFriendRequest(){
-   const response = await axiosInstance.get("/users/friend-requests");
-   return response.data;
-}
+// export async function getFriendRequest(){
+//    const response = await axiosInstance.get("/users/friend-requests");
+//    return response.data;
+// }
 
-export async function acceptFriendRequests(requestId){
-  const response=await axiosInstance.put(`/users/friend-request/${requestId}/accept`);
-  return response.data;
-}
+// export async function acceptFriendRequests(requestId){
+//   const response=await axiosInstance.put(`/users/friend-request/${requestId}/accept`);
+//   return response.data;
+// }
 
 // get stream token api for chat and video call
-export async function getStreamToken(){
+export async function getStreamToken() {
   const response = await axiosInstance.get("/chat/token ");
   return response.data;
 }
