@@ -1,7 +1,8 @@
 import User from "../models/user.js";
 import FriendRequest from "../models/FriendRequest.js";
+import Notification from "../models/Notification.js";
 
-//route for recomending user
+//route for recommending user
 export async function getRecommendedUsers(req,res){
     try {
         const currentUserId=req.user.id;
@@ -119,6 +120,14 @@ export async function sendFriendRequest(req, res) {
       sender: myId,
       recipient: recipientId,
     });
+    // Save notification for recipient
+  await Notification.create({
+    recipient: recipientId,
+    sender: myId,
+    type: "friend_request",
+  });
+
+res.status(201).json({ message: "Friend request sent successfully", friendRequest });
 
     res.status(201).json({
       message: "Friend request sent successfully",
@@ -159,6 +168,14 @@ export async function acceptFriendRequest(req,res){
         await User.findByIdAndUpdate(friendRequest.recipient,{
             $addToSet:{ friends:friendRequest.sender},
         });
+        // Notify the original sender their request was accepted
+      await Notification.create({
+        recipient: friendRequest.sender,
+        sender: friendRequest.recipient,
+        type: "friend_accepted",
+      });
+
+res.status(200).json({ message: "Friends request accepted" });
         res.status(200).json({message:"Friends request accepted"});
 
     } catch(error){
