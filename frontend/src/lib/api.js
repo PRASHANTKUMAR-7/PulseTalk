@@ -76,3 +76,18 @@ export async function getStreamToken(){
   const response = await axiosInstance.get("/chat/token ");
   return response.data;
 }
+//*---- Notification Api ----*//
+export async function getUnreadNotificationCount() {
+  const response = await axiosInstance.get("/notifications/unread-count");
+  return response.data; // { count: number }
+}
+
+export async function getNotifications() {
+  const response = await axiosInstance.get("/notifications");
+  return response.data;
+}
+
+export async function markNotificationsAsRead() {
+  const response = await axiosInstance.patch("/notifications/mark-read");
+  return response.data;
+}
