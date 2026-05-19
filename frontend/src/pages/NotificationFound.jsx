@@ -12,7 +12,7 @@ const NotificationPage = () => {
     queryKey: ["friendRequests"],
     queryFn: getFriendRequest,
   });
-//if friend request accepted then immediately show in frined list
+//if friend request accepted then immediately show in friend list
   const {mutate: acceptRequestMutation, isPending}=useMutation({
     mutationFn:acceptFriendRequests,
     onSuccess:()=>{

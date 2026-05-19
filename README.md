@@ -67,24 +67,24 @@ npm install
 npm start
 ```
 
-Visit `http://localhost:3000` to view the app.
+Visit `http://localhost:5173` to view the app.
 
 ## 🔮 Future Enhancements
 
 * ✅ One-on-one messaging
 * ✅ Peer-to-peer video calls
-* ⏳ Group video/voice calls
+* ⏳ Group video/voice calls(Not Done Yet)
 * ⏳ Media file sharing in chat
 * ⏳ Message seen/delivered status
 * ⏳ Push notifications
 * ⏳ End-to-end encryption
 * ⏳ Dark mode support
-* ⏳ Dockerized deployment
+* ⏳ Dockerized deployment(Not Done Yet)
 
 ## 🌐 Deployment (Coming Soon)
 
-* **Frontend**: Vercel / Netlify
-* **Backend**: Render / Railway
+* **Frontend**: Vercel / Netlify(if You required)
+* **Backend**: Render / Railway(Both Done Here)
 * **Database**: MongoDB Atlas
 
 ## 👨‍💻 Developer
@@ -92,8 +92,8 @@ Visit `http://localhost:3000` to view the app.
 **Prashant**
 MERN Stack Developer | DSA Enthusiast | Future FAANG Engineer
 
-* 📧 Email: [your.email@example.com](mailto:your.email@example.com)
-* 🔗 LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)
+* 📧 Email: (prashantk.stu@gmail.com)
+* 🔗 LinkedIn:(https://www.linkedin.com/in/prashant-kumar-b82a07380/)
 * 💼 Portfolio: *Coming soon*
 
 ## 🤝 Contributing
@@ -109,6 +109,3 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 > Built with ❤️ by Prashant — because communication should be real-time, simple, and powerful.
 
-library i used 
-  react router 
-  reac-hot-toast
