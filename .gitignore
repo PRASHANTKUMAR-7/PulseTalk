@@ -1,5 +1,6 @@
+# =========================
 # Logs
-
+# =========================
 logs
 *.log
 npm-debug.log*
@@ -8,29 +9,63 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# =========================
 # Dependencies
+# =========================
+node_modules/
+**/node_modules/
 
-node_modules
-
+# =========================
 # Build outputs
+# =========================
+dist/
+dist-ssr/
+build/
+coverage/
 
-dist
-dist-ssr
-
-# Local env files
-
+# =========================
+# Environment files
+# =========================
 .env
 .env.*
+*.env
 *.local
 
-# Editor directories and files
+# Backend env
+backend/.env
+backend/.env.*
+backend/**/*.env
 
+# Frontend env
+frontend/.env
+frontend/.env.*
+frontend/**/*.env
+
+# =========================
+# Editor directories/files
+# =========================
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
+Thumbs.db
+
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# =========================
+# Cache/temp files
+# =========================
+.cache/
+.parcel-cache/
+.eslintcache
+temp/
+tmp/
+
+# =========================
+# Optional screenshots/data
+# =========================
+data/*.png
