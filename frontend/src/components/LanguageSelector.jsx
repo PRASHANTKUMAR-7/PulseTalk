@@ -8,8 +8,8 @@
  * - Passes selected language up to parent via onLanguageChange callback
  */
 
-import { useState } from "react";
 import { LanguagesIcon } from "lucide-react";
+import { useState } from "react";
 
 // All supported languages
 // code: ISO 639-1 language code used by LibreTranslate API
@@ -48,7 +48,7 @@ const LanguageSelector = ({ selectedLang, onLanguageChange }) => {
 
       {/* Dropdown list — only rendered when isOpen is true */}
       {isOpen && (
-        <div className="mb-2 bg-base-200 border border-base-300 rounded-xl shadow-xl w-44 max-h-64 overflow-y-auto">
+        <div className="mb-2 bg-base-200 border border-base-300 rounded-lg shadow-xl w-28 max-h-44 overflow-y-auto">
           {LANGUAGES.map((lang) => (
             <button
               key={lang.code}
@@ -56,7 +56,7 @@ const LanguageSelector = ({ selectedLang, onLanguageChange }) => {
                 onLanguageChange(lang.code); // Notify parent of selection
                 setIsOpen(false);            // Close dropdown after selection
               }}
-              className={`w-full text-left px-4 py-2 text-sm hover:bg-base-300 
+              className={`w-full text-left px-2 py-1 text-xs hover:bg-base-300 
                 transition-colors first:rounded-t-xl last:rounded-b-xl 
                 ${selectedLang === lang.code ? "bg-primary text-primary-content" : ""}
               `}
@@ -68,22 +68,23 @@ const LanguageSelector = ({ selectedLang, onLanguageChange }) => {
       )}
 
       {/* Main floating toggle button
+          - btn-sm makes it smaller
           - Shows as primary (colored) when translation is active
           - Shows as neutral (grey) when set to English (off) */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`btn btn-circle shadow-lg ${
+        className={`btn btn-sm btn-circle shadow-lg ${
           selectedLang !== "en" ? "btn-primary" : "btn-neutral"
         }`}
         title="Translate messages"
       >
-        <LanguagesIcon className="h-5 w-5" />
+        <LanguagesIcon className="h-4 w-4" />
       </button>
 
       {/* Small badge showing active language code (e.g. "HI", "FR")
           Only visible when translation is active (not English) */}
       {selectedLang !== "en" && (
-        <span className="absolute -top-2 -left-2 badge badge-secondary badge-sm font-bold uppercase">
+        <span className="absolute -top-1.5 -left-1.5 badge badge-secondary badge-xs font-bold uppercase">
           {selectedLang}
         </span>
       )}

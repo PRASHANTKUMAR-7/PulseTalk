@@ -12,13 +12,15 @@
  * - ChatPage: handles data fetching and Stream initialization
  * - ChatContent: renders the actual UI (needs TranslationContext so it's separate)
  */
-
+import { HomeIcon } from "lucide-react";
+import { Link } from "react-router";  // add this import at top
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
 import { useQuery } from "@tanstack/react-query";
 import { getStreamToken } from "../lib/api";
 import { StreamChat } from "stream-chat";
+
 import {
   Channel,
   ChannelHeader,
