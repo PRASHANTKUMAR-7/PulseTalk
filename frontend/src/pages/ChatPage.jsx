@@ -12,15 +12,14 @@
  * - ChatPage: handles data fetching and Stream initialization
  * - ChatContent: renders the actual UI (needs TranslationContext so it's separate)
  */
-import { HomeIcon } from "lucide-react";
-import { Link } from "react-router";  // add this import at top
-import { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router";
-import useAuthUser from "../hooks/useAuthUser";
 import { useQuery } from "@tanstack/react-query";
-import { getStreamToken } from "../lib/api";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { StreamChat } from "stream-chat";
+import useAuthUser from "../hooks/useAuthUser";
+import { getStreamToken } from "../lib/api";
 
+import toast from "react-hot-toast";
 import {
   Channel,
   ChannelHeader,
@@ -30,12 +29,11 @@ import {
   Thread,
   Window,
 } from "stream-chat-react";
-import ChatLoader from "../components/ChatLoader";
 import CallButton from "../components/CallButton";
-import LanguageSelector from "../components/LanguageSelector";
+import ChatLoader from "../components/ChatLoader";
 import CustomMessage from "../components/CustomMessage";
-import { TranslationProvider, TranslationContext } from "../context/TranslationContext";
-import toast from "react-hot-toast";
+import LanguageSelector from "../components/LanguageSelector";
+import { TranslationContext, TranslationProvider } from "../context/TranslationContext";
 
 // Stream API key from environment variables
 const STREAM_API_KEY = import.meta.env.VITE_STREAM_API_KEY;
