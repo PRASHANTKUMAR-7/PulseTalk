@@ -32,7 +32,7 @@ export async function getMyFriends(req,res){
         res.status(200).json(user.friends);
 
     } catch (error) {
-        console.error("Error in getMyfriends ontroller",error.message);
+        console.error("Error in getMyfriends controller",error.message);
         res.status(500).json({message: "Internet server Error"});
     }
 
