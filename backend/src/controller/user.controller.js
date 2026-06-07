@@ -1,5 +1,5 @@
 import FriendRequest from "../models/FriendRequest.js";
-import Notification from "../models/Notification.js";
+import Notification from "../models/notification.js";
 import User from "../models/user.js";
 
 //route for recommending user
