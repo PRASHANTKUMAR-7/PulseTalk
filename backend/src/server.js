@@ -32,6 +32,10 @@ app.use("/api/chat", chatRoutes);
 // this line with your other app.use() routes
 app.use("/api/notifications", notificationRoutes);
 
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist"))); //check out later for it use
 
