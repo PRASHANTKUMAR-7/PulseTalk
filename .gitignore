@@ -69,3 +69,6 @@ tmp/
 # Optional screenshots/data
 # =========================
 data/*.png
+# OpenCode
+opencode.json
+.opencode/
