@@ -3,6 +3,7 @@ import {MessageSquareHeart} from "lucide-react"
 import GoogleIcon from "../components/GoogleIcon";
 import { Link, useSearchParams } from "react-router";
 import useSignup from "../hooks/useSignup";
+import { useGoogleOAuthEnabled } from "../hooks/useGoogleOAuthEnabled";
 import { getGoogleAuthUrl } from "../lib/api";
 
 
@@ -11,6 +12,7 @@ const OAUTH_ERRORS = {
   oauth_error: "Something went wrong completing Google sign-in. Please try again.",
   access_denied: "Google sign-in was denied.",
   account_exists: "An account with this email already exists. Try logging in instead.",
+  oauth_disabled: "Google sign-in is not available on this server right now.",
 };
 
 const SighUpPage = () => {
@@ -30,6 +32,7 @@ const SighUpPage = () => {
   // });
 //This line is resposible for using custome hook
   const {signupMutation,isPending,error}=useSignup();
+  const { data: googleEnabled } = useGoogleOAuthEnabled();
 
   // Handle checkbox change
   const handleCheckboxChange = (e) => {
@@ -133,6 +136,7 @@ const SighUpPage = () => {
 
 
               <div className="divider">OR</div>
+              {googleEnabled !== false && (
               <button
                 type="button"
                 className="btn btn-outline w-full"
@@ -141,6 +145,7 @@ const SighUpPage = () => {
                 <GoogleIcon className="size-5" />
                 Sign up with Google
               </button>
+              )}
             <button className="btn btn-primary w-full" type="submit" disabled={!termsAccepted}>
 
                {isPending ? (

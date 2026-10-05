@@ -4,12 +4,14 @@ import GoogleIcon from "../components/GoogleIcon";
 import useLogin from "../hooks/useLogin";
 import { getGoogleAuthUrl } from "../lib/api";
 import { Link, useSearchParams } from "react-router";
+import { useGoogleOAuthEnabled } from "../hooks/useGoogleOAuthEnabled";
 
 
 const OAUTH_ERRORS = {
   oauth_failed: "Google sign-in was cancelled or failed. Please try again.",
   oauth_error: "Something went wrong completing Google sign-in. Please try again.",
   access_denied: "Google sign-in was denied.",
+  oauth_disabled: "Google sign-in is not available on this server right now.",
 };
 
 const LoginPage = () => {
@@ -32,6 +34,7 @@ const oauthError = OAUTH_ERRORS[searchParams.get("error")];
 
 
 const {loginMutation,isPending,error}=useLogin();
+const { data: googleEnabled } = useGoogleOAuthEnabled();
 
 const handlelogin=(e)=>{
   e.preventDefault();
@@ -97,6 +100,7 @@ return (
                 />
               </div>
               <div className="divider">OR</div>
+              {googleEnabled !== false && (
               <button
                 type="button"
                 className="btn btn-outline w-full"
@@ -105,6 +109,7 @@ return (
                 <GoogleIcon className="size-5" />
                 Sign in with Google
               </button>
+              )}
               <button type="submit" className="btn btn-primary w-full" disabled={isPending}>
                 {
                   isPending?(
