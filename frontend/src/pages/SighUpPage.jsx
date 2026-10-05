@@ -1,7 +1,7 @@
-import { useState } from "react"
-import {MessageSquareHeart} from "lucide-react"
-import GoogleIcon from "../components/GoogleIcon";
+import { MessageSquareHeart } from "lucide-react";
+import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
+import GoogleIcon from "../components/GoogleIcon";
 import useSignup from "../hooks/useSignup";
 import { getGoogleAuthUrl } from "../lib/api";
 
@@ -69,7 +69,7 @@ const SighUpPage = () => {
             <div>
               <h2 className="text-xl font-semibold">Create an Account</h2>
               <p className="text-sm opacity-70">
-                PulseTalk ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Where Conversations Complete You!
+                PulseTalk — Conversations Without Boundaries.
               </p>
             </div>
             <div className="space-y-3">
