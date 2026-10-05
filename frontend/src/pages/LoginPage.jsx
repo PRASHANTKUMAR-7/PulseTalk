@@ -4,7 +4,6 @@ import GoogleIcon from "../components/GoogleIcon";
 import useLogin from "../hooks/useLogin";
 import { getGoogleAuthUrl } from "../lib/api";
 import { Link, useSearchParams } from "react-router";
-import { useGoogleOAuthEnabled } from "../hooks/useGoogleOAuthEnabled";
 
 
 const OAUTH_ERRORS = {
@@ -34,7 +33,6 @@ const oauthError = OAUTH_ERRORS[searchParams.get("error")];
 
 
 const {loginMutation,isPending,error}=useLogin();
-const { data: googleEnabled } = useGoogleOAuthEnabled();
 
 const handlelogin=(e)=>{
   e.preventDefault();
@@ -99,17 +97,6 @@ return (
                   required
                 />
               </div>
-              <div className="divider">OR</div>
-              {googleEnabled !== false && (
-              <button
-                type="button"
-                className="btn btn-outline w-full"
-                onClick={() => (window.location.href = getGoogleAuthUrl())}
-              >
-                <GoogleIcon className="size-5" />
-                Sign in with Google
-              </button>
-              )}
               <button type="submit" className="btn btn-primary w-full" disabled={isPending}>
                 {
                   isPending?(
@@ -121,6 +108,15 @@ return (
                     "Log In"
                   )
                 }
+              </button>
+              <div className="divider">OR</div>
+              <button
+                type="button"
+                className="btn btn-outline w-full"
+                onClick={() => (window.location.href = getGoogleAuthUrl())}
+              >
+                <GoogleIcon className="size-5" />
+                Sign in with Google
               </button>
               <div className="text-center mt-4">
               <p className="text-sm">

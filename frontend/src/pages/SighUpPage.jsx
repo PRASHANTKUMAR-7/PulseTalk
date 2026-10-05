@@ -3,7 +3,6 @@ import {MessageSquareHeart} from "lucide-react"
 import GoogleIcon from "../components/GoogleIcon";
 import { Link, useSearchParams } from "react-router";
 import useSignup from "../hooks/useSignup";
-import { useGoogleOAuthEnabled } from "../hooks/useGoogleOAuthEnabled";
 import { getGoogleAuthUrl } from "../lib/api";
 
 
@@ -32,7 +31,6 @@ const SighUpPage = () => {
   // });
 //This line is resposible for using custome hook
   const {signupMutation,isPending,error}=useSignup();
-  const { data: googleEnabled } = useGoogleOAuthEnabled();
 
   // Handle checkbox change
   const handleCheckboxChange = (e) => {
@@ -135,18 +133,7 @@ const SighUpPage = () => {
                 </div>
 
 
-              <div className="divider">OR</div>
-              {googleEnabled !== false && (
-              <button
-                type="button"
-                className="btn btn-outline w-full"
-                onClick={() => (window.location.href = getGoogleAuthUrl())}
-              >
-                <GoogleIcon className="size-5" />
-                Sign up with Google
-              </button>
-              )}
-            <button className="btn btn-primary w-full" type="submit" disabled={!termsAccepted}>
+              <button className="btn btn-primary w-full" type="submit" disabled={!termsAccepted}>
 
                {isPending ? (
                 <>
@@ -155,6 +142,15 @@ const SighUpPage = () => {
                 </>
                ) : ("Create Account")} {/*why use of isPending*/}
             </button>
+              <div className="divider">OR</div>
+              <button
+                type="button"
+                className="btn btn-outline w-full"
+                onClick={() => (window.location.href = getGoogleAuthUrl())}
+              >
+                <GoogleIcon className="size-5" />
+                Sign up with Google
+              </button>
             <div className="text-center mt-4">
               <p className="text-sm">
                 Already have an account?{" "}
