@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-    "dependencies": {
+  "dependencies": {
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -10,6 +10,8 @@
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "stream-chat": "^8.60.0"
   },
   "devDependencies": {

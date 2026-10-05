@@ -1,4 +1,4 @@
-import { axiosInstance } from "./axios";
+﻿import { axiosInstance } from "./axios";
 
 export const signup = async (signupData) => {
   const response = await axiosInstance.post("/auth/signup", signupData);
@@ -91,3 +91,9 @@ export async function markNotificationsAsRead() {
   const response = await axiosInstance.patch("/notifications/mark-read");
   return response.data;
 }
+
+
+export const getGoogleAuthUrl = () => {
+  const base = import.meta.env.MODE === "development" ? "http://localhost:5001" : window.location.origin;
+  return `${base}/api/auth/google`;
+};

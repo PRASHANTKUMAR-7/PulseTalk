@@ -1,6 +1,7 @@
-import { upsertStreamUser } from "../lib/stream.js";
+﻿import { upsertStreamUser } from "../lib/stream.js";
 import User from "../models/user.js";
-import jwt from "jsonwebtoken";
+import { generateJWTToken } from "../utils/generateToken.js";
+import { setAuthCookie, clearAuthCookie } from "../utils/authCookie.js";
 
 
 //sign up route
@@ -19,7 +20,7 @@ export async function signup(req,res){
         }
         const exitingUser= await User.findOne({email});
         if(exitingUser){
-            return res.status(400).json({message: "Email already existed, please use another email1"});
+            return res.status(400).json({message: "Email already exists, please use another email"});
         }
         const idx= Math.floor(Math.random()*100)+1;
         const randomAvatar=`https://avatar.iran.liara.run/public/${idx}.png`;
@@ -46,17 +47,7 @@ export async function signup(req,res){
 
 
         //token is genrated for authenticationusing jwt 
-        const token =jwt.sign({ userId:newUser._id},process.env.JWT_SECRET_KEY,{
-            expiresIn:"7d"
-        });
-
-        res.cookie("jwt",token,{ // jwt is the a variable name for jwt cookie
-            maxAge: 7*24*60*60*1000,
-            httpOnly: true, //prevent XSS attacks,
-            sameSite:"strict", //prevent from ccrc attack
-            secure:process.env.NODE_ENV === 'production',
-        });
-
+        setAuthCookie(res, generateJWTToken(newUser._id));
         res.status(201).json({success:true,user:newUser}); 
 
     }
@@ -78,17 +69,7 @@ export async function login(req,res){
         if(!isPasswordCorrect) return res.status(401).json({message:"Invalid email or password"});
 
         //token is genrated for authenticationusing jwt 
-        const token =jwt.sign({ userId: user._id},process.env.JWT_SECRET_KEY,{
-            expiresIn:"7d"
-        });
-
-        res.cookie("jwt",token,{ // jwt is the a variable name for jwt cookie
-            maxAge: 7*24*60*60*1000,
-            httpOnly: true, //prevent XSS attacks,
-            sameSite:"strict", //prevent from ccrc attack
-            secure:process.env.NODE_ENV === 'production',
-        });    
-        
+        setAuthCookie(res, generateJWTToken(user._id));
         res.status(200).json({success: true, user});
     
     }
@@ -101,8 +82,8 @@ export async function login(req,res){
 
 //logout route
 export async function logout(req,res){
-    res.clearCookie("jwt");
-    res.status(200).json({success:true,message: "Logout Succesful"});
+    clearAuthCookie(res);
+    res.status(200).json({success:true,message: "Logout successful"});
 };
 
 export async function onboard(req,res){
@@ -134,7 +115,7 @@ export async function onboard(req,res){
             name: updateUser.fullName,
             image:updateUser.profilePic || "",
          })
-        console.log(`Stream user updated after unboarding for ${updateUser.fullName}`);
+        console.log(`Stream user updated after onboarding for ${updateUser.fullName}`);
     } catch (streamError) {
         console.log("Error updating Stream user during onboard:",streamError);
         
@@ -149,3 +130,4 @@ export async function onboard(req,res){
       res.status(500).json({message: "Internal Server Error"});  
     }
 };
+

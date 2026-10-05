@@ -1,11 +1,22 @@
 import { useState } from "react"
 import {MessageSquareHeart} from "lucide-react"
-import { Link } from "react-router";
+import GoogleIcon from "../components/GoogleIcon";
+import { Link, useSearchParams } from "react-router";
 import useSignup from "../hooks/useSignup";
+import { getGoogleAuthUrl } from "../lib/api";
 
+
+const OAUTH_ERRORS = {
+  oauth_failed: "Google sign-in was cancelled or failed. Please try again.",
+  oauth_error: "Something went wrong completing Google sign-in. Please try again.",
+  access_denied: "Google sign-in was denied.",
+  account_exists: "An account with this email already exists. Try logging in instead.",
+};
 
 const SighUpPage = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [searchParams] = useSearchParams();
+  const oauthError = OAUTH_ERRORS[searchParams.get("error")];
   const [signupData , setSignupData]=useState({
     fullName:"",
     email:"",
@@ -43,9 +54,9 @@ const SighUpPage = () => {
       </span>
       </div>
       {/* ERROR MESSAGE  */}
-      {error &&(
+      {(error || oauthError) &&(
         <div className="alert alert-error mb-4">
-          <span>{error.response.data.message}</span>
+          <span>{oauthError || error?.response?.data?.message || "Something went wrong"}</span>
         </div>
       )}
 
@@ -57,7 +68,7 @@ const SighUpPage = () => {
             <div>
               <h2 className="text-xl font-semibold">Create an Account</h2>
               <p className="text-sm opacity-70">
-                PulseTalk — Where Conversations Complete You!
+                PulseTalk ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Where Conversations Complete You!
               </p>
             </div>
             <div className="space-y-3">
@@ -120,7 +131,18 @@ const SighUpPage = () => {
                   </label>
                 </div>
 
+
+              <div className="divider">OR</div>
+              <button
+                type="button"
+                className="btn btn-outline w-full"
+                onClick={() => (window.location.href = getGoogleAuthUrl())}
+              >
+                <GoogleIcon className="size-5" />
+                Sign up with Google
+              </button>
             <button className="btn btn-primary w-full" type="submit" disabled={!termsAccepted}>
+
                {isPending ? (
                 <>
                 <span className="loading loading-spinner loading-xs"></span>

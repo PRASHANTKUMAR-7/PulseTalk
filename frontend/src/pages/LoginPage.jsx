@@ -1,14 +1,24 @@
-import { useState } from "react"
+﻿import { useState } from "react"
 import { MessageSquareHeart } from "lucide-react";
+import GoogleIcon from "../components/GoogleIcon";
 import useLogin from "../hooks/useLogin";
-import { Link } from "react-router";
+import { getGoogleAuthUrl } from "../lib/api";
+import { Link, useSearchParams } from "react-router";
 
+
+const OAUTH_ERRORS = {
+  oauth_failed: "Google sign-in was cancelled or failed. Please try again.",
+  oauth_error: "Something went wrong completing Google sign-in. Please try again.",
+  access_denied: "Google sign-in was denied.",
+};
 
 const LoginPage = () => {
 const[loginData , setLoginData]=useState({
   email: "",
   password:"",
 });
+const [searchParams] = useSearchParams();
+const oauthError = OAUTH_ERRORS[searchParams.get("error")];
 // this is how we did it first, without using our custom hook useLogin
 // const queryClient = useQueryClient();
 // const {
@@ -41,9 +51,9 @@ return (
         </span>
       </div>
       {/* Error Message Display */}
-      {error && (
+      {(error || oauthError) && (
         <div className="alert alert-error mb-4">
-          <span>{error.response.data.message}</span>
+          <span>{oauthError || error?.response?.data?.message || "Something went wrong"}</span>
         </div>
       )}
 
@@ -86,6 +96,15 @@ return (
                   required
                 />
               </div>
+              <div className="divider">OR</div>
+              <button
+                type="button"
+                className="btn btn-outline w-full"
+                onClick={() => (window.location.href = getGoogleAuthUrl())}
+              >
+                <GoogleIcon className="size-5" />
+                Sign in with Google
+              </button>
               <button type="submit" className="btn btn-primary w-full" disabled={isPending}>
                 {
                   isPending?(

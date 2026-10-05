@@ -1,4 +1,4 @@
-import express from "express";
+﻿import express from "express";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import chatRoutes from "./routes/chat.route.js";
 import notificationRoutes from "./routes/notification.route.js";
+import oauthRoutes from "./routes/oauth.route.js";
 
 import { connectDB } from "./lib/db.js";
 
@@ -31,6 +32,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 // this line with your other app.use() routes
 app.use("/api/notifications", notificationRoutes);
+// OAuth routes
+app.use("/api/auth", oauthRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
