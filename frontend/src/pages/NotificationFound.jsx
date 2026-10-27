@@ -4,11 +4,13 @@ import { useEffect } from "react";
 import NoNotificationsFound from "../components/NoNotificationPage";
 import { useMarkAsRead } from "../hooks/useNotifications";
 import { acceptFriendRequest, getFriendRequests } from "../lib/api";
+import useAuthUser from "../hooks/useAuthUser";
 
 
 const NotificationPage = () => {
   const queryClient = useQueryClient();
   const { mutate: markAsRead } = useMarkAsRead();
+  const { authUser } = useAuthUser();
 
 // Mark all as read as soon as user opens this page
 useEffect(() => {
@@ -91,25 +93,31 @@ useEffect(() => {
         {/* Accept Friend Request */}
         {acceptedRequests.length > 0 && (
           <section className="space-y-4">
-            <h2 className="text=xl font-semibold flex items-center gap-2">
+            <h2 className="text-xl font-semibold flex items-center gap-2">
               <BellIcon className="h-5 w-5 text-success"/>
               New Connection
             </h2>
             <div className="space-y-3">
-              {acceptedRequests.map((notification) => (
+              {acceptedRequests.map((notification) => {
+                const isCurrentUserSender = notification.sender?._id === authUser?._id;
+                const friend = isCurrentUserSender ? notification.recipient : notification.sender;
+                const message = isCurrentUserSender
+                  ? `${friend?.fullName} accepted your friend request`
+                  : `You accepted ${friend?.fullName}'s friend request`;
+                return (
                 <div key={notification._id} className="card bg-base-200 shadow-sm">
                   <div className="card-body p-4">
                     <div className="flex items-start gap-3">
                       <div className="avatar mt-1 size-10 rounded-full">
                         <img
-                          src={notification.recipient.profilePic}
-                          alt={notification.recipient.fullName}
+                          src={friend?.profilePic}
+                          alt={friend?.fullName}
                         />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold">{notification.recipient.fullName}</h3>
+                        <h3 className="font-semibold">{friend?.fullName}</h3>
                         <p className="text-sm my-1">
-                          {notification.recipient.fullName} accepted your friend request
+                          {message}
                         </p>
                         <p className="text-xs flex items-center opacity-70">
                           <ClockIcon className="h-3 w-3 mr-1" />
@@ -123,7 +131,8 @@ useEffect(() => {
                     </div>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </section>
         )}
