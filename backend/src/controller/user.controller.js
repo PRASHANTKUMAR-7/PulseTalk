@@ -251,9 +251,36 @@ export async function getOutgoingFriendReqs(req, res) {
   }
 }
 
+export async function removeFriend(req, res) {
+  try {
+    const myId = req.user.id;
+    const { id: friendId } = req.params;
 
+    if (myId === friendId) {
+      return res.status(400).json({ message: "You cannot remove yourself" });
+    }
 
+    const me = await User.findById(myId);
+    const friend = await User.findById(friendId);
 
+    if (!me || !friend) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
+    // Remove each other from friends lists
+    await User.findByIdAndUpdate(myId, {
+      $pull: { friends: friendId },
+    });
+
+    await User.findByIdAndUpdate(friendId, {
+      $pull: { friends: myId },
+    });
+
+    res.status(200).json({ message: "Friend removed successfully" });
+  } catch (error) {
+    console.log("Error in removeFriend controller", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
 
 //*************************************** */

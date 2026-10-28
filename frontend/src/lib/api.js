@@ -59,6 +59,11 @@ export async function acceptFriendRequest(requestId) {
   return response.data;
 }
 
+export async function removeFriend(userId) {
+  const response = await axiosInstance.delete(`/users/friends/${userId}`);
+  return response.data;
+}
+
 
 //*---- Notification Api ----*//
 export async function getFriendRequest(){

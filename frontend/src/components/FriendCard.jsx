@@ -1,7 +1,32 @@
 import { Link } from "react-router";
 import { LANGUAGE_TO_FLAG } from "../constants";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { removeFriend } from "../lib/api";
+import toast from "react-hot-toast";
+import { UserMinusIcon } from "lucide-react";
 
 const FriendCard = ({ friend }) => {
+  const queryClient = useQueryClient();
+
+  const { mutate: removeFriendMutation, isPending } = useMutation({
+    mutationFn: removeFriend,
+    onSuccess: () => {
+      toast.success("You removed one friend");
+      queryClient.invalidateQueries({ queryKey: ["friends"] });
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: ["outgoingFriendReqs"] });
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || "Failed to remove friend");
+    },
+  });
+
+  const handleRemoveFriend = () => {
+    if (window.confirm(`Remove ${friend.fullName} from your friends?`)) {
+      removeFriendMutation(friend._id);
+    }
+  };
+
   return (
     <div className="card bg-base-200 hover:shadow-md transition-shadow">
       <div className="card-body p-4">
@@ -24,9 +49,19 @@ const FriendCard = ({ friend }) => {
           </span>
         </div>
 
-        <Link to={`/chat/${friend._id}`} className="btn btn-outline w-full">
-          Message
-        </Link>
+        <div className="flex flex-col gap-2">
+          <Link to={`/chat/${friend._id}`} className="btn btn-outline w-full">
+            Message
+          </Link>
+          <button
+            className="btn btn-error btn-outline w-full"
+            onClick={handleRemoveFriend}
+            disabled={isPending}
+          >
+            <UserMinusIcon className="size-4 mr-1" />
+            {isPending ? "Removing..." : "Remove Friend"}
+          </button>
+        </div>
       </div>
     </div>
   );
